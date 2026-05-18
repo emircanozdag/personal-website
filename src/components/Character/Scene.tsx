@@ -82,7 +82,7 @@ const Scene = () => {
       const onMouseMove = (event: MouseEvent) => {
         handleMouseMove(event, (x, y) => (mouse = { x, y }));
       };
-      let debounce: number | undefined;
+      let debounce: ReturnType<typeof setTimeout> | undefined;
       const onTouchStart = (event: TouchEvent) => {
         const element = event.target as HTMLElement;
         debounce = setTimeout(() => {
@@ -102,7 +102,7 @@ const Scene = () => {
       document.addEventListener("mousemove", (event) => {
         onMouseMove(event);
       });
-      const landingDiv = document.getElementById("landingDiv");
+      const landingDiv = document.getElementById("home");
       if (landingDiv) {
         landingDiv.addEventListener("touchstart", onTouchStart);
         landingDiv.addEventListener("touchend", onTouchEnd);

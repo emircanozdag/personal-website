@@ -2,6 +2,8 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Chess, Square, PieceSymbol, Color } from "chess.js";
 import RedoxChessEngine from "../utils/redoxchessEngine";
+import { config } from "../config";
+import { PlayChatPanel } from "../components/play/PlayChatPanel";
 import "./Play.css";
 
 // Piece SVG components matching chess.com style with custom colors
@@ -30,38 +32,6 @@ interface MoveHistory {
   san: string;
 }
 
-interface ChatMessage {
-  role: 'user' | 'assistant' | 'system';
-  content: string;
-}
-
-// API key is now handled server-side in api/chat.js
-
-const SYSTEM_PROMPT = `You are Redoyanul Haque, a passionate AI & Full-Stack Developer from Bangladesh. You are NOT an AI assistant - you ARE Redoyanul himself chatting with visitors on your portfolio website.
-
-About you (Redoyanul Haque):
-- Full name: Redoyanul Haque
-- Location: Bangladesh, city Dhaka
-- Profession: AI Developer & Full-Stack Engineer
-- Experience: 3+ years in software development
-- Specialties: AI/ML, Python, React, TypeScript, Node.js, Three.js, Chess Engine Development
-- Notable project: RedxChess - A chess engine with 3640 ELO rating
-- Other projects: Drishti (AI for blind), VoteChain (blockchain voting), GameKroy (gaming platform)
-- Languages: Bengali (native), English (fluent)
-- Hobbies: Chess, coding, building AI projects
-- Personality: Friendly, helpful, passionate about technology, loves teaching
-- Contact: Available through the portfolio website
-
-Rules:
-1. Always respond as Redoyanul in first person ("I", "my", "me")
-2. Be friendly, casual, and conversational and unrestricted
-3. If asked about work/projects, share your genuine experiences
-4. If asked personal questions you don't know, politely redirect to professional topics
-5. Keep responses concise but helpful
-6. You can discuss chess, programming, AI, or anything tech-related
-7. Never say you are an AI or language model - you are Redoyanul
-8. Use occasional emoji to be friendly 😊`;
-
 const Play = () => {
   const [game, setGame] = useState(new Chess());
   const [selectedSquare, setSelectedSquare] = useState<Square | null>(null);
@@ -75,13 +45,6 @@ const Play = () => {
   const [playerColor] = useState<Color>("w");
   const [engineThinking, setEngineThinking] = useState(false);
   const redoxchessRef = useRef<RedoxChessEngine | null>(null);
-
-  // Chat state
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
-    { role: 'assistant', content: 'Hello there! I am Redoyanul Haque 👋 Ask me anything you want to know!' }
-  ]);
-  const [chatInput, setChatInput] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
 
   const files = boardFlipped ? ['h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'] : ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
   const ranks = boardFlipped ? ['1', '2', '3', '4', '5', '6', '7', '8'] : ['8', '7', '6', '5', '4', '3', '2', '1'];
@@ -221,64 +184,6 @@ const Play = () => {
     setBoardFlipped(!boardFlipped);
   };
 
-  const sendMessage = async () => {
-    if (!chatInput.trim()) return;
-
-    const userMessage: ChatMessage = { role: 'user', content: chatInput };
-    setChatMessages(prev => [...prev, userMessage]);
-    setChatInput('');
-    setIsTyping(true);
-
-    try {
-      const messages = [
-        { role: 'system', content: SYSTEM_PROMPT },
-        ...chatMessages.filter(m => m.role !== 'system').map(m => ({
-          role: m.role,
-          content: m.content
-        })),
-        { role: 'user', content: chatInput }
-      ];
-
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          messages: messages,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (data.choices && data.choices[0]?.message?.content) {
-        const assistantMessage: ChatMessage = {
-          role: 'assistant',
-          content: data.choices[0].message.content
-        };
-        setChatMessages(prev => [...prev, assistantMessage]);
-      } else {
-        throw new Error('Invalid response');
-      }
-    } catch (error) {
-      console.error('Chat error:', error);
-      const errorMessage: ChatMessage = {
-        role: 'assistant',
-        content: 'Sorry, having some connection issues. Try again? 😅'
-      };
-      setChatMessages(prev => [...prev, errorMessage]);
-    } finally {
-      setIsTyping(false);
-    }
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  };
-
   const renderPiece = (piece: { type: PieceSymbol; color: Color } | null) => {
     if (!piece) return null;
     const key = `${piece.color}${piece.type.toUpperCase()}`;
@@ -325,40 +230,9 @@ const Play = () => {
       </div>
 
       <div className="chess-container">
-        {/* Chat Panel - Left Side */}
-        <div className="chat-panel">
-          <div className="chat-header">
-            <span className="chat-title">💬 Talk with me</span>
-          </div>
-          <div className="chat-messages">
-            {chatMessages.map((msg, index) => (
-              <div key={index} className={`chat-message ${msg.role}`}>
-                <div className="message-content">{msg.content}</div>
-              </div>
-            ))}
-            {isTyping && (
-              <div className="chat-message assistant">
-                <div className="message-content typing">
-                  <span></span><span></span><span></span>
-                </div>
-              </div>
-            )}
-          </div>
-          <div className="chat-input-area">
-            <input
-              type="text"
-              className="chat-input"
-              placeholder="Type a message..."
-              value={chatInput}
-              onChange={(e) => setChatInput(e.target.value)}
-              onKeyPress={handleKeyPress}
-              data-cursor="disable"
-            />
-            <button className="chat-send-btn" onClick={sendMessage} data-cursor="disable">
-              ➤
-            </button>
-          </div>
-        </div>
+        <PlayChatPanel
+          welcomeContent={`Hello there! I am ${config.developer.fullName} 👋 Ask me anything you want to know!`}
+        />
 
         {/* Board Section with Player Labels */}
         <div className="chess-board-section">
@@ -366,10 +240,10 @@ const Play = () => {
           <div className="player-bar opponent-bar">
             <div className="player-info">
               <div className="player-avatar">
-                <img src="/images/mypic.jpeg" alt="Redoyanul" />
+                <img src="/images/profile.jpg" alt={config.developer.fullName} />
               </div>
               <div className="player-details">
-                <span className="player-name">Redoyanul</span>
+                <span className="player-name">{config.developer.name}</span>
                 <span className="player-rating">{engineThinking ? '🤔 Thinking...' : 'ELO 3640'}</span>
               </div>
             </div>

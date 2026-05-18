@@ -10,18 +10,21 @@ import WhatIDo from "./WhatIDo";
 import Work from "./Work";
 import TechStackNew from "./TechStackNew";
 import CallToAction from "./CallToAction";
+import ScrollToTop from "./ScrollToTop";
+import MobileProfile from "./mobile/MobileProfile";
 import setSplitText from "./utils/splitText";
 
 const MainContainer = ({ children }: PropsWithChildren) => {
   const [isDesktopView, setIsDesktopView] = useState<boolean>(
     window.innerWidth > 1024
   );
-  const [isMobile] = useState<boolean>(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
 
   useEffect(() => {
     const resizeHandler = () => {
       setSplitText();
       setIsDesktopView(window.innerWidth > 1024);
+      setIsMobile(window.innerWidth <= 768);
     };
     resizeHandler();
     window.addEventListener("resize", resizeHandler);
@@ -36,16 +39,21 @@ const MainContainer = ({ children }: PropsWithChildren) => {
       <Navbar />
       <SocialIcons />
       {isDesktopView && !isMobile && children}
-      <div className="container-main">
-        <Landing />
-        <About />
-        <WhatIDo />
-        <Career />
-        <Work />
-        <TechStackNew />
-        <CallToAction />
-        <Contact />
-      </div>
+      {isMobile ? (
+        <MobileProfile />
+      ) : (
+        <div className="container-main">
+          <Landing />
+          <About />
+          <WhatIDo />
+          <Career />
+          <Work />
+          <TechStackNew />
+          <CallToAction />
+          <Contact />
+        </div>
+      )}
+      <ScrollToTop />
     </div>
   );
 };

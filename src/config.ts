@@ -1,25 +1,34 @@
 export const config = {
     developer: {
-        name: "Redoyanul",
-        fullName: "Redoyanul Haque",
+        name: "Emir Can",
+        fullName: "Emir Can Özdağ",
         title: "AI & Full-Stack Developer",
         description: "AI & Full-Stack Developer building intelligent systems and modern web applications. Passionate about machine learning, deep learning, and creating next-gen autonomous agents."
     },
     social: {
-        github: "red1-for-hek",
-        email: "redoyanul1234@gmail.com",
-        location: "Bangladesh"
+        github: "emircanozdag",
+        email: "emircanozdag@gmail.com",
+        location: "Ankara, Turkey"
     },
     about: {
         title: "About Me",
-        description: "I am a self-taught AI & Full-Stack Developer from Bangladesh. I build intelligent systems, chatbots, and modern web applications. My expertise includes Machine Learning, Deep Learning, NLP, and Full-Stack Web Development with React, Node.js, and Python. Currently building next-gen AI Agents and JARVIS-like Personal Assistants. I have a competitive programming mindset and a deep passion for automation. Code is poetry, AI is the canvas."
+        lead: "Code is poetry — AI is the canvas.",
+        description: "I am a self-taught AI & Full-Stack Developer based in Ankara, Turkey. I build intelligent systems, chatbots, and modern web applications. My expertise spans Machine Learning, Deep Learning, NLP, and Full-Stack Web Development with React, Node.js, and Python. Currently shaping next-gen AI Agents and JARVIS-like personal assistants with a competitive programming mindset and a deep passion for automation.",
+        highlights: [
+            "Self-taught",
+            "Ankara, Turkey",
+            "AI Agents",
+            "ML & NLP",
+            "Full-Stack",
+            "Automation"
+        ]
     },
     experiences: [
         {
             position: "Learning Something New",
             company: "Self-Development",
             period: "2025 - Present",
-            location: "Bangladesh",
+            location: "Ankara, Turkey",
             description: "Continuously exploring emerging technologies, researching advanced AI systems, and pushing the boundaries of what's possible in tech.",
             responsibilities: [
                 "Researching cutting-edge AI and ML technologies",
@@ -33,7 +42,7 @@ export const config = {
             position: "AI Engineer",
             company: "Freelance & Projects",
             period: "2025",
-            location: "Bangladesh",
+            location: "Ankara, Turkey",
             description: "Developing intelligent AI systems, chatbots, and machine learning solutions. Building next-gen conversational AI agents and JARVIS-like personal assistants.",
             responsibilities: [
                 "Building AI-powered chatbots and conversational agents",
@@ -47,7 +56,7 @@ export const config = {
             position: "Full-Stack Developer",
             company: "Freelance & Projects",
             period: "2024",
-            location: "Bangladesh",
+            location: "Ankara, Turkey",
             description: "Built complete web applications from frontend to backend. Developed responsive UIs, RESTful APIs, and database solutions for various clients and projects.",
             responsibilities: [
                 "Developing full-stack web applications using React and Node.js",
@@ -61,7 +70,7 @@ export const config = {
             position: "Python Developer",
             company: "Self-Taught & Projects",
             period: "2023",
-            location: "Bangladesh",
+            location: "Ankara, Turkey",
             description: "Dove deep into Python programming, building automation scripts, bots, and mastering the fundamentals of software development and problem-solving.",
             responsibilities: [
                 "Learning Python programming and core concepts",
@@ -75,7 +84,7 @@ export const config = {
             position: "Graphic Designer",
             company: "Freelance",
             period: "2022",
-            location: "Bangladesh",
+            location: "Ankara, Turkey",
             description: "Started my creative journey as a graphic designer, creating logos, banners, and visual content. This sparked my passion for technology and digital creation.",
             responsibilities: [
                 "Designing logos and brand identity materials",
@@ -89,7 +98,7 @@ export const config = {
             position: "Microsoft Office",
             company: "Begin Learning",
             period: "2021",
-            location: "Bangladesh",
+            location: "Ankara, Turkey",
             description: "Started my journey into the digital world by learning Microsoft Office tools. This foundational step introduced me to computers and sparked my curiosity for technology.",
             responsibilities: [
                 "Learning Microsoft Word, Excel, and PowerPoint",
@@ -122,7 +131,7 @@ export const config = {
             title: "EIE - Earthquake Impact Estimator",
             category: "IoT / Hardware",
             technologies: "Arduino, C++, IoT Sensors, Python, ML, React",
-            image: "/images/eie.png",
+            image: "/images/eie.svg",
             description: "A practical circuit-based IoT system utilizing Arduino to predict earthquakes before they strike. Integrates hardware sensors for real-time seismic detection and impact estimation."
         },
         {
@@ -167,12 +176,12 @@ export const config = {
         }
     ],
     contact: {
-        email: "redoyanul1234@gmail.com",
-        github: "https://github.com/red1-for-hek",
-        linkedin: "https://linkedin.com/in/red1-for-hek",
-        twitter: "https://x.com/red_1_ul",
+        email: "emircanozdag@gmail.com",
+        github: "https://github.com/emircanozdag",
+        linkedin: "https://www.linkedin.com/in/emircanozdag/",
+        twitter: "https://x.com/i/flow/login",
         facebook: "https://www.facebook.com/redoyanulhaque.hacker.official",
-        instagram: "https://www.instagram.com/red_1_ul"
+        instagram: "https://www.instagram.com/accounts/login/"
     },
     skills: {
         develop: {

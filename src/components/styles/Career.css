@@ -27,7 +27,7 @@
 }
 
 .career-section h2>span {
-  font-family: "Geist", sans-serif;
+  font-family: var(--font-display);
   font-weight: 300;
 }
 
