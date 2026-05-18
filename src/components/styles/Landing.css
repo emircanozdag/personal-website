@@ -1,3 +1,354 @@
+.landing-hero-bg {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 90% 55% at 18% 22%, rgba(196, 129, 255, 0.14), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 88% 75%, rgba(251, 141, 255, 0.08), transparent 50%);
+}
+
+.landing-kicker {
+  margin: 0 0 10px 0;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(196, 129, 255, 0.9);
+}
+
+.landing-name-rule {
+  width: 48px;
+  height: 2px;
+  margin: 14px 0 18px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(196, 129, 255, 0.95), rgba(251, 141, 255, 0.35), transparent);
+}
+
+/* ───────────── Play With Me card ───────────── */
+.landing-play-card {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 22px;
+  padding: 14px 18px 14px 14px;
+  width: 100%;
+  max-width: min(420px, 92vw);
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015) 60%) padding-box,
+    linear-gradient(135deg, rgba(196, 129, 255, 0.55), rgba(251, 141, 255, 0.18) 40%, rgba(255, 255, 255, 0.06) 80%) border-box;
+  border: 1px solid transparent;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 12px 36px -18px rgba(196, 129, 255, 0.55),
+    0 18px 60px -30px rgba(0, 0, 0, 0.6);
+  transition:
+    transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    background 0.45s ease;
+  overflow: hidden;
+}
+
+.landing-play-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(115deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.08) 50%,
+      transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.9s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.landing-play-card:hover {
+  transform: translateY(-2px);
+  color: inherit;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 18px 50px -16px rgba(196, 129, 255, 0.75),
+    0 22px 70px -28px rgba(251, 141, 255, 0.45);
+}
+
+.landing-play-card:hover::before {
+  transform: translateX(120%);
+}
+
+.landing-play-card:focus-visible {
+  outline: 2px solid rgba(196, 129, 255, 0.85);
+  outline-offset: 4px;
+}
+
+.landing-play-glow {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(196, 129, 255, 0.22), transparent 55%),
+    radial-gradient(120% 80% at 100% 100%, rgba(251, 141, 255, 0.16), transparent 55%);
+  opacity: 0.8;
+}
+
+.landing-play-icon {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  color: #fff;
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.18), transparent 55%),
+    linear-gradient(135deg, rgba(196, 129, 255, 0.95), rgba(251, 141, 255, 0.85));
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 10px 24px -10px rgba(196, 129, 255, 0.7);
+}
+
+.landing-play-icon::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  border: 1px solid rgba(196, 129, 255, 0.5);
+  opacity: 0;
+  animation: landingPlayPulse 2.6s ease-out infinite;
+  pointer-events: none;
+}
+
+.landing-play-icon svg {
+  width: 28px;
+  height: 28px;
+  transform-origin: 50% 60%;
+  animation: landingPlayBob 4.2s ease-in-out infinite;
+}
+
+.landing-play-card:hover .landing-play-icon svg {
+  animation-duration: 2.2s;
+}
+
+@keyframes landingPlayBob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-2px) rotate(2deg);
+  }
+}
+
+@keyframes landingPlayPulse {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.55;
+  }
+  70% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+}
+
+.landing-play-text {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  flex: 1;
+}
+
+.landing-play-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(196, 129, 255, 0.95);
+}
+
+.landing-play-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #6ee7a4;
+  box-shadow: 0 0 0 0 rgba(110, 231, 164, 0.6);
+  animation: landingPlayDot 1.8s ease-out infinite;
+}
+
+@keyframes landingPlayDot {
+  0% {
+    box-shadow: 0 0 0 0 rgba(110, 231, 164, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(110, 231, 164, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(110, 231, 164, 0);
+  }
+}
+
+.landing-play-headline {
+  font-family: "Geist", "Plus Jakarta Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.96);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.landing-play-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.landing-play-rating {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.92);
+  background: linear-gradient(135deg, rgba(196, 129, 255, 0.22), rgba(251, 141, 255, 0.12));
+  border: 1px solid rgba(196, 129, 255, 0.35);
+}
+
+.landing-play-sep {
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.landing-play-engine {
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.landing-play-arrow {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition:
+    transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.landing-play-arrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+.landing-play-card:hover .landing-play-arrow {
+  transform: translateX(4px);
+  color: #fff;
+  background: linear-gradient(135deg, rgba(196, 129, 255, 0.35), rgba(251, 141, 255, 0.2));
+  border-color: rgba(196, 129, 255, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-play-icon svg,
+  .landing-play-icon::after,
+  .landing-play-dot,
+  .landing-play-card,
+  .landing-play-card::before,
+  .landing-play-arrow {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+/* ───────── End Play With Me card ───────── */
+
+.landing-scroll-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 14;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.landing-scroll-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.landing-scroll-line {
+  display: block;
+  width: 1px;
+  height: 44px;
+  background: linear-gradient(to bottom, rgba(196, 129, 255, 0.75), transparent);
+  animation: landingScrollPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes landingScrollPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scaleY(0.92);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
 /* Mobile Photo - hidden by default, shown only on mobile */
 .mobile-photo {
   display: none;
@@ -85,42 +436,60 @@
 
   .landing-info h3 {
     text-align: center;
-    display: none;
-    /* Hide 'An' if not needed, or keep it static */
-  }
-
-  /* Force static positioning to prevent overlaps */
-  .landing-info h2,
-  h2.landing-info-h2,
-  .landing-h2-1,
-  .landing-h2-info {
-    position: static !important;
     display: block;
-    width: auto;
-    margin: 0 !important;
-    font-size: 20px !important;
-    line-height: 1.5 !important;
-    white-space: normal;
+    font-size: 11px !important;
+    letter-spacing: 0.35em !important;
+    color: rgba(196, 129, 255, 0.85) !important;
+    margin-bottom: 8px !important;
+  }
+
+  .landing-scroll-hint {
+    bottom: 16px;
+  }
+
+  .landing-scroll-line {
+    height: 32px;
+  }
+
+  .landing-info h2.landing-role {
+    justify-content: center;
+    width: 100%;
+    font-size: 26px !important;
+    line-height: 1.1 !important;
+    gap: 10px;
     text-align: center;
-    height: auto !important;
-    transform: none !important;
-    /* Remove any transforms */
   }
 
-  /* Specific styling for the distinct parts */
-  .landing-h2-1 {
-    font-size: 24px !important;
-    color: var(--accentColor);
-    font-weight: 700;
+  .landing-role-divider {
+    width: 22px;
   }
 
-  .landing-h2-info {
-    font-size: 18px !important;
-    color: rgba(255, 255, 255, 0.9);
+  .landing-play-card {
+    margin-top: 18px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 12px 14px 12px 12px;
+    max-width: min(380px, 92vw);
+    text-align: left;
   }
 
-  .landing-info-h2::after {
-    display: none;
+  .landing-play-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .landing-play-icon svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .landing-play-headline {
+    font-size: 14px;
+  }
+
+  .landing-play-arrow {
+    width: 30px;
+    height: 30px;
   }
 
   /* Show mobile photo */
@@ -128,23 +497,39 @@
     display: block;
     position: relative !important;
     width: 100%;
-    max-width: 380px;
+    max-width: 280px;
     margin: 0 auto;
     z-index: 1;
     order: 2;
-    /* Second: Photo */
-    /* Add fade mask to bottom */
-    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
     pointer-events: none;
     transform: none !important;
+  }
+
+  .mobile-photo::before {
+    content: "";
+    position: absolute;
+    inset: -10%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(closest-side,
+        rgba(196, 129, 255, 0.32),
+        rgba(251, 141, 255, 0.1) 55%,
+        transparent 75%);
+    filter: blur(36px);
+    pointer-events: none;
   }
 
   .mobile-photo img {
     width: 100%;
     height: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 0 40px rgba(194, 164, 255, 0.4));
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 0 0 1px rgba(196, 129, 255, 0.18) inset,
+      0 22px 50px -16px rgba(194, 164, 255, 0.45);
+    display: block;
   }
 }
 
@@ -266,7 +651,7 @@
   left: 50%;
   z-index: 0;
   bottom: 50px;
-  pointer-events: inherit;
+  pointer-events: none;
 }
 
 .character-model::after {
@@ -316,6 +701,7 @@
   z-index: 3;
   transform: translate(-50%, -50%);
   border-radius: 50%;
+  pointer-events: auto;
 }
 
 .landing-intro {
@@ -353,6 +739,12 @@
   bottom: 40px;
   top: inherit;
   z-index: 9;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  max-width: min(92vw, 520px);
+  box-sizing: border-box;
 }
 
 .landing-info h3 {
@@ -363,60 +755,45 @@
   margin: 0;
 }
 
-.landing-info h2 {
-  margin: 0;
-  margin-top: -20px;
-  margin-left: 20px;
+.landing-info h2.landing-role {
+  margin: 4px 0 0;
+  padding: 0;
   font-family: "Geist", sans-serif;
   font-weight: 600;
-  font-size: 28px;
-  line-height: 40px;
+  font-size: clamp(26px, 2.6vw, 44px);
+  line-height: 1.05;
+  letter-spacing: 0.5px;
   position: relative;
-  display: flex;
-  flex-wrap: nowrap;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: #fff;
+  white-space: normal;
+  text-transform: none;
 }
 
-.landing-h2-info {
-  white-space: nowrap;
+.landing-role-accent {
+  background: linear-gradient(120deg, #c481ff 0%, #fb8dff 55%, #ffd1ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
 }
 
-.landing-h2-info-1 {
-  position: absolute;
-  top: 0;
-  white-space: nowrap;
+.landing-role-divider {
+  display: inline-block;
+  width: 28px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(196, 129, 255, 0.95), rgba(251, 141, 255, 0.35), transparent);
+  flex-shrink: 0;
 }
 
-h2.landing-info-h2 {
-  color: #c481ff;
-  font-size: 36px;
-  width: 150%;
-  margin: 0;
-  font-family: "Geist", sans-serif;
-  font-weight: 600;
-  position: relative;
-  margin-left: -5px;
-}
-
-.landing-h2-2 {
-  position: absolute;
-  top: 0;
-  white-space: nowrap;
-}
-
-.landing-info-h2::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 120%;
-  z-index: 3;
-  background-image: linear-gradient(0deg,
-      var(--backgroundColor) 40%,
-      rgba(0, 0, 0, 0) 110%);
-  top: 0;
-  left: 0;
+.landing-role-rest {
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 500;
+  letter-spacing: 1px;
 }
 
 @media screen and (min-width: 500px) {
@@ -440,15 +817,6 @@ h2.landing-info-h2 {
     font-size: 30px;
     line-height: 30px;
   }
-
-  .landing-info h2 {
-    font-size: 35px;
-    line-height: 40px;
-  }
-
-  h2.landing-info-h2 {
-    font-size: 38px;
-  }
 }
 
 @media screen and (min-width: 768px) {
@@ -468,16 +836,106 @@ h2.landing-info-h2 {
   .landing-info h3 {
     font-size: 25px;
   }
+}
 
-  .landing-info h2 {
-    font-size: 45px;
-    line-height: 42px;
+/* ───────── iPad portrait / small tablet (769–1024px) ───────── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .landing-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    align-items: center;
+    column-gap: clamp(24px, 4vw, 56px);
+    padding: 110px 0 90px;
+    box-sizing: border-box;
   }
 
-  h2.landing-info-h2 {
-    font-size: 55px;
+  .landing-intro,
+  .landing-info {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    transform: none;
+    grid-column: 1;
+    text-align: left;
+    max-width: 100%;
+  }
+
+  .landing-intro {
+    align-self: end;
+    padding-bottom: 18px;
+  }
+
+  .landing-info {
+    align-self: start;
+    padding-top: 18px;
+    align-items: flex-start;
+  }
+
+  .landing-intro h1 {
+    font-size: 56px;
+    line-height: 1.05;
+  }
+
+  .landing-intro h2 {
+    font-size: 22px;
+  }
+
+  .landing-info h3 {
+    font-size: 20px;
+  }
+
+  .mobile-photo {
+    display: block;
+    position: relative;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    justify-self: center;
+    width: 100%;
+    max-width: min(360px, 42vw);
+    pointer-events: none;
+  }
+
+  .mobile-photo::before {
+    content: "";
+    position: absolute;
+    inset: -12%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(closest-side,
+        rgba(196, 129, 255, 0.38),
+        rgba(251, 141, 255, 0.14) 55%,
+        transparent 75%);
+    filter: blur(48px);
+    pointer-events: none;
+  }
+
+  .mobile-photo img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 0 0 1px rgba(196, 129, 255, 0.2) inset,
+      0 30px 60px -20px rgba(194, 164, 255, 0.5);
+    display: block;
+  }
+
+  .landing-play-card {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 380px;
+  }
+
+  .landing-scroll-hint {
+    bottom: 18px;
   }
 }
+/* ───────── End iPad portrait / small tablet ───────── */
 
 @media screen and (min-width: 1025px) {
   .character-model {
@@ -507,6 +965,7 @@ h2.landing-info-h2 {
     transform: translate(0%, -50%);
     right: auto;
     left: 66%;
+    max-width: min(34vw, 520px);
   }
 }
 
@@ -526,6 +985,7 @@ h2.landing-info-h2 {
     transform: translate(0%, -50%);
     right: auto;
     left: 70%;
+    max-width: min(32vw, 540px);
   }
 }
 
@@ -543,12 +1003,11 @@ h2.landing-info-h2 {
     font-size: 35px;
   }
 
-  .landing-info h2 {
-    font-size: 65px;
-    line-height: 62px;
+  .landing-info h2.landing-role {
+    font-size: 56px;
   }
 
-  h2.landing-info-h2 {
-    font-size: 75px;
+  .landing-role-divider {
+    width: 36px;
   }
 }

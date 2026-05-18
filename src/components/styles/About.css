@@ -1,35 +1,177 @@
 .about-section {
   display: flex;
   align-items: center;
-  justify-content: left;
-  place-items: center;
+  justify-content: center;
   position: relative;
   opacity: 1;
   height: auto;
   width: var(--cWidth);
   margin: auto;
-}
-.about-me {
-  padding: 40px 0px;
-  padding-bottom: 0;
-  width: 100%;
-  max-width: calc(100% - 15px);
-}
-.about-me h3 {
-  font-size: 18px;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  font-weight: 400;
-  color: var(--accentColor);
-  margin-bottom: 15px;
+  padding: 80px 0;
+  box-sizing: border-box;
 }
 
-.about-me p {
-  font-size: 20px;
+.about-me {
+  width: 100%;
+  max-width: calc(100% - 15px);
+  padding: 0;
+}
+
+.about-card {
+  position: relative;
+  padding: 28px 24px;
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(196, 129, 255, 0.05), rgba(251, 141, 255, 0.02) 60%),
+    rgba(13, 9, 16, 0.55);
+  border: 1px solid rgba(196, 129, 255, 0.14);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    0 30px 60px -40px rgba(196, 129, 255, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+}
+
+.about-card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(196, 129, 255, 0.18), transparent 55%),
+    radial-gradient(80% 60% at 100% 100%, rgba(251, 141, 255, 0.10), transparent 60%);
+  mix-blend-mode: screen;
+  opacity: 0.85;
+  z-index: 0;
+}
+
+.about-rail {
+  position: absolute;
+  top: 28px;
+  bottom: 28px;
+  left: 0;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(196, 129, 255, 0.9),
+    rgba(251, 141, 255, 0.45),
+    transparent
+  );
+  z-index: 1;
+}
+
+.about-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.about-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.about-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
   font-weight: 600;
-  line-height: 26px;
-  letter-spacing: 0.5px;
-  word-spacing: 2px;
+  color: rgba(196, 129, 255, 0.92);
+}
+
+.about-eyebrow::before {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(196, 129, 255, 0.85), rgba(196, 129, 255, 0));
+}
+
+.about-me h3.about-title {
+  margin: 14px 0 0;
+  font-size: clamp(22px, 2.6vw, 36px);
+  line-height: 1.22;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #fff;
+  background: linear-gradient(120deg, #ffffff 35%, rgba(196, 129, 255, 0.95) 70%, rgba(251, 141, 255, 0.92));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.about-rule {
+  width: 56px;
+  height: 2px;
+  margin-top: 16px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(196, 129, 255, 0.95), rgba(251, 141, 255, 0.35), transparent);
+}
+
+.about-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.about-me p.about-para {
+  margin: 0;
+  font-size: clamp(15px, 1.05vw, 19px);
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+  font-weight: 400;
+  color: rgba(234, 229, 236, 0.82);
+  word-spacing: normal;
+  max-width: 65ch;
+}
+
+.about-highlights {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+}
+
+.about-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(234, 229, 236, 0.88);
+  background: rgba(196, 129, 255, 0.08);
+  border: 1px solid rgba(196, 129, 255, 0.22);
+  border-radius: 999px;
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.about-chip:hover {
+  background: rgba(196, 129, 255, 0.16);
+  border-color: rgba(196, 129, 255, 0.45);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.about-chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(196, 129, 255, 1), rgba(251, 141, 255, 0.8));
+  box-shadow: 0 0 8px rgba(196, 129, 255, 0.6);
 }
 
 .about-me .split-word {
@@ -44,58 +186,80 @@
 @media only screen and (min-width: 600px) {
   .about-section {
     justify-content: center;
+    padding: 100px 0;
   }
   .about-me {
-    width: 500px;
+    width: 600px;
+    max-width: calc(100% - 40px);
   }
-  .about-me h3 {
-    font-size: 22px;
-    letter-spacing: 6px;
+  .about-card {
+    padding: 36px 36px;
   }
-  .about-me p {
-    font-size: 28px;
-    line-height: 32px;
+  .about-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.36em;
   }
 }
+
 @media only screen and (min-width: 768px) {
   .about-me {
-    width: 500px;
+    width: 680px;
     max-width: calc(100% - 70px);
-    transform: translateY(0%);
   }
-  .about-me h3 {
-    font-size: 25px;
-    letter-spacing: 7px;
+  .about-card {
+    padding: 44px 44px;
   }
-  .about-me p {
-    font-size: 33px;
-    line-height: 36px;
+  .about-grid {
+    gap: 32px;
   }
-  .about-section {
-    opacity: 1;
+  .about-rail {
+    top: 36px;
+    bottom: 36px;
   }
 }
+
 @media only screen and (min-width: 1025px) {
   .about-section {
     width: var(--cWidth);
-    justify-content: right;
     max-width: 1920px;
     height: var(--vh);
-    padding: 0px;
-    opacity: 1;
+    padding: 0;
+    justify-content: flex-end;
   }
   .about-me {
-    padding: 0px;
-    width: 50%;
+    width: 56%;
+    max-width: 760px;
+    padding: 0;
   }
-  .about-me p {
-    font-size: 1.9vw;
-    line-height: 2.3vw;
+  .about-card {
+    padding: 44px 48px;
+  }
+  .about-grid {
+    grid-template-columns: minmax(220px, 0.9fr) 1fr;
+    align-items: start;
+    gap: 36px;
+  }
+  .about-me h3.about-title {
+    font-size: clamp(26px, 2.1vw, 40px);
+  }
+  .about-me p.about-para {
+    font-size: clamp(16px, 1.05vw, 20px);
   }
 }
-@media only screen and (min-width: 1950px) {
-  .about-me p {
-    font-size: 2.5rem;
-    line-height: 2.7rem;
+
+@media only screen and (min-width: 1600px) {
+  .about-card {
+    padding: 56px 60px;
+  }
+  .about-me h3.about-title {
+    font-size: 2.4rem;
+  }
+  .about-me p.about-para {
+    font-size: 1.25rem;
+    line-height: 1.6;
+  }
+  .about-chip {
+    font-size: 13px;
+    padding: 7px 14px;
   }
 }

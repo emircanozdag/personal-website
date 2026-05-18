@@ -36,7 +36,16 @@ const WorkImage = (props: Props) => {
             <MdArrowOutward />
           </div>
         )}
-        <img src={props.image} alt={props.alt} />
+        <img
+          src={props.image}
+          alt={props.alt}
+          onError={(e) => {
+            const img = e.currentTarget as HTMLImageElement;
+            if (!img.src.endsWith("/images/placeholder.webp")) {
+              img.src = "/images/placeholder.webp";
+            }
+          }}
+        />
         {isVideo && <video src={video} autoPlay muted playsInline loop></video>}
       </a>
     </div>
