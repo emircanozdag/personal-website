@@ -1,0 +1,10 @@
+/* TEAM */
+Developer: Emir Can Özdağ
+Site: https://emircanozdag.com
+Location: Ankara, Turkey
+Contact: emircanozdag@gmail.com
+GitHub: https://github.com/emircanozdag
+LinkedIn: https://www.linkedin.com/in/emircanozdag/
+
+/* THANKS */
+Built with React, TypeScript, Three.js, GSAP, and Vite.
