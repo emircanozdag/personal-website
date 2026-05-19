@@ -97,6 +97,14 @@ body:has(.play-page) {
   color: #000;
 }
 
+.play-title {
+  margin: 12px 0 0;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.02em;
+}
+
 /* Chess Container */
 .chess-container {
   display: flex;

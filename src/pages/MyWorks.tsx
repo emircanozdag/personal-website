@@ -10,9 +10,12 @@ const MyWorks = () => {
           ← Back to Home
         </Link>
         <h1>
-          All <span>Works</span>
+          All <span>Works</span> — Projects by Emir Can Özdağ
         </h1>
-        <p>A collection of all my projects and creations</p>
+        <p>
+          A collection of AI, blockchain, and full-stack projects including Drishti LLM chatbot,
+          RedxChess engine, VoteChain, and more.
+        </p>
       </div>
 
       <div className="myworks-grid">

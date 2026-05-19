@@ -227,6 +227,7 @@ const Play = () => {
         <Link to="/" className="back-button" data-cursor="disable">
           ← Back to Home
         </Link>
+        <h1 className="play-title">Play Chess vs RedxChess — 3640 ELO AI Engine</h1>
       </div>
 
       <div className="chess-container">
