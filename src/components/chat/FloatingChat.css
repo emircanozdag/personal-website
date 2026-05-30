@@ -1,0 +1,239 @@
+.floating-chat {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 68px);
+  right: 16px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.floating-chat > * {
+  pointer-events: auto;
+}
+
+/* ─── Trigger: pill with label + avatar (closed) ─── */
+.floating-chat__fab {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 52px;
+  padding: 6px 6px 6px 16px;
+  border: 1px solid rgba(194, 164, 255, 0.28);
+  border-radius: 999px;
+  cursor: pointer;
+  background: rgba(18, 12, 22, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 10px 26px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.06);
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.22s ease, background 0.22s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.floating-chat__fab:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 14px 32px rgba(0, 0, 0, 0.45),
+    0 0 24px rgba(194, 164, 255, 0.35);
+}
+
+.floating-chat__fab:active {
+  transform: scale(0.97);
+}
+
+.floating-chat__label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: #f2ecff;
+  white-space: nowrap;
+}
+
+.floating-chat__avatar {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border-radius: 50%;
+  overflow: visible;
+}
+
+.floating-chat__avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accentColor);
+  box-shadow: 0 0 0 2px rgba(18, 12, 22, 0.82);
+}
+
+.floating-chat__online {
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #51e08a;
+  border: 2px solid rgba(18, 12, 22, 0.95);
+  z-index: 2;
+}
+
+/* Idle attention pulse around the avatar (only while closed) */
+.floating-chat__ping {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(194, 164, 255, 0.55);
+  animation: floatingChatPing 2.6s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes floatingChatPing {
+  0% {
+    box-shadow: 0 0 0 0 rgba(194, 164, 255, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 13px rgba(194, 164, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(194, 164, 255, 0);
+  }
+}
+
+/* ─── Trigger: circular close (open) ─── */
+.floating-chat.is-open .floating-chat__fab {
+  width: 52px;
+  padding: 0;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(20, 14, 24, 0.92);
+}
+
+.floating-chat__close {
+  display: grid;
+  place-items: center;
+  color: #fff;
+  line-height: 0;
+}
+
+/* ─── First-visit teaser bubble ─── */
+.floating-chat__teaser {
+  position: relative;
+  max-width: 232px;
+  margin-top: -2px;
+  padding: 11px 30px 11px 14px;
+  text-align: left;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  color: #1a1020;
+  background: linear-gradient(135deg, #e7d8ff 0%, var(--accentColor) 100%);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+  animation: floatingChatTeaserIn 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.floating-chat__teaser::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 18px;
+  width: 12px;
+  height: 12px;
+  background: #e7d8ff;
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+
+.floating-chat__teaser-text {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.floating-chat__teaser-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 11px;
+  line-height: 1;
+  color: rgba(26, 16, 32, 0.6);
+  cursor: pointer;
+  padding: 2px;
+}
+
+.floating-chat__teaser-close:hover {
+  color: #1a1020;
+}
+
+@keyframes floatingChatTeaserIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ─── Panel (opens downward from the trigger) ─── */
+.floating-chat__panel {
+  width: min(90vw, 372px);
+  transform-origin: top right;
+  animation: floatingChatIn 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+  filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.45));
+}
+
+.floating-chat__panel .chat-panel {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  height: min(68vh, 540px);
+  border-radius: 18px;
+  border-color: rgba(194, 164, 255, 0.25);
+}
+
+.floating-chat__panel .chat-header {
+  background: linear-gradient(
+    135deg,
+    rgba(194, 164, 255, 0.16),
+    rgba(194, 164, 255, 0.05)
+  );
+}
+
+@keyframes floatingChatIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .floating-chat {
+    top: calc(env(safe-area-inset-top, 0px) + 60px);
+    right: 12px;
+  }
+
+  .floating-chat__panel {
+    width: calc(100vw - 24px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-chat__ping,
+  .floating-chat__teaser,
+  .floating-chat__panel {
+    animation: none;
+  }
+}

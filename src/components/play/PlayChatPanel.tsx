@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { config } from "../../config";
+import "./PlayChatPanel.css";
 
 interface ChatMessage {
   role: "user" | "assistant" | "system";
@@ -9,6 +10,33 @@ interface ChatMessage {
 interface PlayChatPanelProps {
   welcomeContent: string;
 }
+
+const STORAGE_KEY = "emir-chat-history";
+const SESSION_KEY = "emir-chat-session";
+const LOG_IDLE_MS = 25_000;
+
+const createSessionId = (): string => {
+  try {
+    if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+      return crypto.randomUUID();
+    }
+  } catch {
+    /* noop */
+  }
+  return `sess-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+};
+
+const getSessionId = (): string => {
+  try {
+    const existing = localStorage.getItem(SESSION_KEY);
+    if (existing) return existing;
+    const fresh = createSessionId();
+    localStorage.setItem(SESSION_KEY, fresh);
+    return fresh;
+  } catch {
+    return createSessionId();
+  }
+};
 
 const buildSystemPrompt = () => {
   const dev = config.developer;
@@ -46,17 +74,95 @@ Rules:
 };
 
 export const PlayChatPanel = ({ welcomeContent }: PlayChatPanelProps) => {
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
-    { role: "assistant", content: welcomeContent },
-  ]);
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved) as ChatMessage[];
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {
+      /* noop */
+    }
+    return [{ role: "assistant", content: welcomeContent }];
+  });
   const [chatInput, setChatInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const systemPromptRef = useRef<string>(buildSystemPrompt());
+  const sessionIdRef = useRef<string>(getSessionId());
+  const chatMessagesRef = useRef<ChatMessage[]>(chatMessages);
+  const lastSentCountRef = useRef<number>(0);
+  const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatMessages, isTyping]);
+
+  useEffect(() => {
+    chatMessagesRef.current = chatMessages;
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(chatMessages));
+    } catch {
+      /* noop */
+    }
+  }, [chatMessages]);
+
+  const flushLog = () => {
+    const messages = chatMessagesRef.current;
+    const userMsgCount = messages.filter((m) => m.role === "user").length;
+    if (userMsgCount === 0 || userMsgCount === lastSentCountRef.current) return;
+    lastSentCountRef.current = userMsgCount;
+
+    const body = JSON.stringify({
+      sessionId: sessionIdRef.current,
+      messages,
+    });
+
+    try {
+      if (typeof navigator !== "undefined" && navigator.sendBeacon) {
+        const blob = new Blob([body], { type: "application/json" });
+        navigator.sendBeacon("/api/log-chat", blob);
+        return;
+      }
+    } catch {
+      /* noop */
+    }
+
+    fetch("/api/log-chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body,
+      keepalive: true,
+    }).catch(() => {
+      /* noop */
+    });
+  };
+
+  const scheduleLog = () => {
+    if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+    idleTimerRef.current = setTimeout(flushLog, LOG_IDLE_MS);
+  };
+
+  useEffect(() => {
+    const handleHide = () => {
+      if (
+        document.visibilityState === "hidden" ||
+        document.visibilityState === undefined
+      ) {
+        flushLog();
+      }
+    };
+    const handlePageHide = () => flushLog();
+
+    document.addEventListener("visibilitychange", handleHide);
+    window.addEventListener("pagehide", handlePageHide);
+    return () => {
+      document.removeEventListener("visibilitychange", handleHide);
+      window.removeEventListener("pagehide", handlePageHide);
+      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+    };
+  }, []);
 
   const sendMessage = async () => {
     const text = chatInput.trim();
@@ -106,6 +212,7 @@ export const PlayChatPanel = ({ welcomeContent }: PlayChatPanelProps) => {
       ]);
     } finally {
       setIsTyping(false);
+      scheduleLog();
     }
   };
 
