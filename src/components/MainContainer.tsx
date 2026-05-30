@@ -12,7 +12,9 @@ import TechStackNew from "./TechStackNew";
 import CallToAction from "./CallToAction";
 import ScrollToTop from "./ScrollToTop";
 import MobileProfile from "./mobile/MobileProfile";
+import FloatingChat from "./chat/FloatingChat";
 import setSplitText from "./utils/splitText";
+import { config } from "../config";
 
 const MainContainer = ({ children }: PropsWithChildren) => {
   const [isDesktopView, setIsDesktopView] = useState<boolean>(
@@ -52,6 +54,11 @@ const MainContainer = ({ children }: PropsWithChildren) => {
           <CallToAction />
           <Contact />
         </div>
+      )}
+      {isMobile && (
+        <FloatingChat
+          welcomeContent={`Hello there! I am ${config.developer.fullName} 👋 Ask me anything you want to know!`}
+        />
       )}
       <ScrollToTop />
     </div>
