@@ -195,11 +195,77 @@
   width: 100%;
   min-width: 0;
   max-width: none;
-  /* --fc-max-h is set from JS via the visualViewport API so the panel (and
-     its input) stays fully visible above the on-screen keyboard. */
-  height: min(540px, var(--fc-max-h, 68vh));
+  height: min(540px, 68vh);
   border-radius: 18px;
   border-color: rgba(194, 164, 255, 0.25);
+}
+
+/* ─── Expanded sheet (keyboard open): pinned to the visual viewport ─── */
+.floating-chat__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 4, 8, 0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  animation: floatingChatFade 0.2s ease;
+}
+
+.floating-chat.is-expanded .floating-chat__panel {
+  position: fixed;
+  /* top / left / width / height are set inline from the visualViewport API */
+  width: 100%;
+  transform-origin: center;
+  animation: floatingChatSheetIn 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+  filter: none;
+}
+
+.floating-chat.is-expanded .floating-chat__panel .chat-panel {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  border: none;
+}
+
+.floating-chat__sheet-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  z-index: 3;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.2s ease;
+}
+
+.floating-chat__sheet-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@keyframes floatingChatFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes floatingChatSheetIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .floating-chat__panel .chat-header {
@@ -235,7 +301,8 @@
 @media (prefers-reduced-motion: reduce) {
   .floating-chat__ping,
   .floating-chat__teaser,
-  .floating-chat__panel {
+  .floating-chat__panel,
+  .floating-chat__backdrop {
     animation: none;
   }
 }

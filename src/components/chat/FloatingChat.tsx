@@ -16,8 +16,11 @@ const firstName = config.developer.fullName.split(" ")[0];
 export const FloatingChat = ({ welcomeContent }: FloatingChatProps) => {
   const [open, setOpen] = useState(false);
   const [showTeaser, setShowTeaser] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const focusedRef = useRef(false);
+  const expandedRef = useRef(false);
 
   const dismissTeaser = () => {
     setShowTeaser(false);
@@ -51,27 +54,72 @@ export const FloatingChat = ({ welcomeContent }: FloatingChatProps) => {
     };
   }, []);
 
-  // Keep the panel (and its input) fully visible when the mobile keyboard
-  // opens by constraining its height to the visible viewport instead of vh.
+  // When the on-screen keyboard opens (or the input is focused), expand the
+  // panel into a full-screen sheet that is pinned exactly to the visible
+  // viewport. Pinning top/left/width/height from visualViewport is required
+  // on iOS WebKit (Safari/Chrome), where the layout viewport ignores the
+  // keyboard and only the visual viewport shifts/shrinks.
   useEffect(() => {
-    if (!open) return;
-    const vv = window.visualViewport;
-    if (!vv) return;
+    if (!open) {
+      focusedRef.current = false;
+      expandedRef.current = false;
+      setExpanded(false);
+      return;
+    }
 
-    const update = () => {
+    const evaluate = () => {
+      const vv = window.visualViewport;
+      const keyboardOpen = vv
+        ? window.innerHeight - vv.height > 120
+        : false;
+      const next = keyboardOpen || focusedRef.current;
+
+      if (next !== expandedRef.current) {
+        expandedRef.current = next;
+        setExpanded(next);
+      }
+
       const panel = panelRef.current;
-      if (!panel) return;
-      const top = panel.getBoundingClientRect().top;
-      const available = vv.height - top - 12;
-      panel.style.setProperty("--fc-max-h", `${Math.max(240, available)}px`);
+      if (!panel || !vv) return;
+      if (next) {
+        panel.style.top = `${vv.offsetTop}px`;
+        panel.style.left = `${vv.offsetLeft}px`;
+        panel.style.width = `${vv.width}px`;
+        panel.style.height = `${vv.height}px`;
+      } else {
+        panel.style.top = "";
+        panel.style.left = "";
+        panel.style.width = "";
+        panel.style.height = "";
+      }
     };
 
-    update();
-    vv.addEventListener("resize", update);
-    vv.addEventListener("scroll", update);
+    const onFocusIn = () => {
+      focusedRef.current = true;
+      evaluate();
+    };
+    const onFocusOut = () => {
+      window.setTimeout(() => {
+        focusedRef.current =
+          panelRef.current?.contains(document.activeElement) ?? false;
+        evaluate();
+      }, 50);
+    };
+
+    const panel = panelRef.current;
+    panel?.addEventListener("focusin", onFocusIn);
+    panel?.addEventListener("focusout", onFocusOut);
+
+    const vv = window.visualViewport;
+    vv?.addEventListener("resize", evaluate);
+    vv?.addEventListener("scroll", evaluate);
+
+    evaluate();
     return () => {
-      vv.removeEventListener("resize", update);
-      vv.removeEventListener("scroll", update);
+      panel?.removeEventListener("focusin", onFocusIn);
+      panel?.removeEventListener("focusout", onFocusOut);
+      vv?.removeEventListener("resize", evaluate);
+      vv?.removeEventListener("scroll", evaluate);
     };
   }, [open]);
 
@@ -80,8 +128,25 @@ export const FloatingChat = ({ welcomeContent }: FloatingChatProps) => {
     if (showTeaser) dismissTeaser();
   };
 
+  const closeChat = () => {
+    const active = document.activeElement as HTMLElement | null;
+    active?.blur?.();
+    setOpen(false);
+  };
+
   return (
-    <div className={`floating-chat ${open ? "is-open" : ""}`}>
+    <div
+      className={`floating-chat ${open ? "is-open" : ""} ${
+        expanded ? "is-expanded" : ""
+      }`}
+    >
+      {expanded && (
+        <div
+          className="floating-chat__backdrop"
+          onClick={closeChat}
+          aria-hidden
+        />
+      )}
       <button
         type="button"
         className="floating-chat__fab"
@@ -145,6 +210,25 @@ export const FloatingChat = ({ welcomeContent }: FloatingChatProps) => {
           role="dialog"
           aria-label="Chat"
         >
+          {expanded && (
+            <button
+              type="button"
+              className="floating-chat__sheet-close"
+              onClick={closeChat}
+              aria-label="Close chat"
+              data-cursor="disable"
+            >
+              <svg viewBox="0 0 24 24" width="18" height="18">
+                <path
+                  d="M6 6l12 12M18 6L6 18"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          )}
           <PlayChatPanel welcomeContent={welcomeContent} />
         </div>
       )}
