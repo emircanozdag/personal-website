@@ -17,6 +17,7 @@ export const FloatingChat = ({ welcomeContent }: FloatingChatProps) => {
   const [open, setOpen] = useState(false);
   const [showTeaser, setShowTeaser] = useState(false);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   const dismissTeaser = () => {
     setShowTeaser(false);
@@ -49,6 +50,30 @@ export const FloatingChat = ({ welcomeContent }: FloatingChatProps) => {
       if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
     };
   }, []);
+
+  // Keep the panel (and its input) fully visible when the mobile keyboard
+  // opens by constraining its height to the visible viewport instead of vh.
+  useEffect(() => {
+    if (!open) return;
+    const vv = window.visualViewport;
+    if (!vv) return;
+
+    const update = () => {
+      const panel = panelRef.current;
+      if (!panel) return;
+      const top = panel.getBoundingClientRect().top;
+      const available = vv.height - top - 12;
+      panel.style.setProperty("--fc-max-h", `${Math.max(240, available)}px`);
+    };
+
+    update();
+    vv.addEventListener("resize", update);
+    vv.addEventListener("scroll", update);
+    return () => {
+      vv.removeEventListener("resize", update);
+      vv.removeEventListener("scroll", update);
+    };
+  }, [open]);
 
   const toggleOpen = () => {
     setOpen((v) => !v);
@@ -114,7 +139,12 @@ export const FloatingChat = ({ welcomeContent }: FloatingChatProps) => {
       )}
 
       {open && (
-        <div className="floating-chat__panel" role="dialog" aria-label="Chat">
+        <div
+          ref={panelRef}
+          className="floating-chat__panel"
+          role="dialog"
+          aria-label="Chat"
+        >
           <PlayChatPanel welcomeContent={welcomeContent} />
         </div>
       )}
