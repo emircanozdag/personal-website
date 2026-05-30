@@ -223,6 +223,13 @@ export const PlayChatPanel = ({ welcomeContent }: PlayChatPanelProps) => {
     }
   };
 
+  const handleInputFocus = () => {
+    // After the mobile keyboard animates in, keep the latest messages in view.
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ block: "nearest" });
+    }, 300);
+  };
+
   return (
     <div className="chat-panel">
       <div className="chat-header">
@@ -255,6 +262,7 @@ export const PlayChatPanel = ({ welcomeContent }: PlayChatPanelProps) => {
           value={chatInput}
           onChange={(e) => setChatInput(e.target.value)}
           onKeyDown={handleKeyDown}
+          onFocus={handleInputFocus}
           disabled={isTyping}
           data-cursor="disable"
           aria-label="Chat input"

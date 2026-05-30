@@ -195,7 +195,9 @@
   width: 100%;
   min-width: 0;
   max-width: none;
-  height: min(68vh, 540px);
+  /* --fc-max-h is set from JS via the visualViewport API so the panel (and
+     its input) stays fully visible above the on-screen keyboard. */
+  height: min(540px, var(--fc-max-h, 68vh));
   border-radius: 18px;
   border-color: rgba(194, 164, 255, 0.25);
 }
