@@ -231,9 +231,7 @@ const Play = () => {
       </div>
 
       <div className="chess-container">
-        <PlayChatPanel
-          welcomeContent={`Hello there! I am ${config.developer.fullName} 👋 Ask me anything you want to know!`}
-        />
+        <PlayChatPanel />
 
         {/* Board Section with Player Labels */}
         <div className="chess-board-section">
