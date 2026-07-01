@@ -176,7 +176,6 @@
     border-right: 1px solid var(--adm-border);
     display: flex;
     flex-direction: column;
-    padding: 20px 0;
     position: fixed;
     top: 0;
     left: 0;
@@ -186,9 +185,10 @@
 }
 
 .adm-sidebar-logo {
-    padding: 0 20px 20px;
+    padding: 20px 20px 16px;
     border-bottom: 1px solid var(--adm-border);
-    margin-bottom: 12px;
+    margin-bottom: 8px;
+    flex-shrink: 0;
 }
 
 .adm-sidebar-logo h2 {
@@ -250,7 +250,7 @@
 .adm-nav-icon { font-size: 1rem; width: 18px; text-align: center; }
 
 .adm-sidebar-footer {
-    padding: 12px 10px 4px;
+    padding: 8px 10px 12px;
     border-top: 1px solid var(--adm-border);
     flex-shrink: 0;
 }
