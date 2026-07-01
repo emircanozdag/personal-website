@@ -26,6 +26,17 @@ const Admin = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     useEffect(() => {
+        // Override the global body { overflow: hidden } set by the main site's GSAP scroll
+        const prev = document.body.style.overflow;
+        document.body.style.overflow = "auto";
+        document.documentElement.style.overflow = "auto";
+        return () => {
+            document.body.style.overflow = prev;
+            document.documentElement.style.overflow = "";
+        };
+    }, []);
+
+    useEffect(() => {
         adminApi.me()
             .then(() => setAuthed(true))
             .catch(() => setAuthed(false));

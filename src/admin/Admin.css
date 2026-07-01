@@ -1,3 +1,9 @@
+/* Override global body overflow: hidden set by GSAP scroll on the main site */
+body:has(.adm-layout),
+html:has(.adm-layout) {
+    overflow: auto !important;
+}
+
 /* ── Admin Panel Base ── */
 :root {
     --adm-bg: #0a0a0f;
