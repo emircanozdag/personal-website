@@ -11,7 +11,10 @@ async function request<T = unknown>(
     });
 
     if (res.status === 401) {
-        window.location.href = '/admin';
+        // Only redirect if we are already inside the authenticated panel (not on the login/me check)
+        if (!path.endsWith('/me')) {
+            window.location.href = '/admin';
+        }
         throw new Error('Unauthorized');
     }
 
