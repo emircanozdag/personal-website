@@ -84,11 +84,7 @@ const Admin = () => {
                 </nav>
 
                 <div className="adm-sidebar-footer">
-                    <a
-                        href="/"
-                        className="adm-nav-item"
-                        style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}
-                    >
+                    <a href="/" className="adm-nav-item">
                         <span className="adm-nav-icon">🏠</span>
                         Siteye Dön
                     </a>
