@@ -23,6 +23,7 @@ const Admin = () => {
     const [authed, setAuthed] = useState<boolean | null>(null); // null = checking
     const [tab, setTab] = useState<Tab>("analytics");
     const [loggingOut, setLoggingOut] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     useEffect(() => {
         adminApi.me()
@@ -59,10 +60,27 @@ const Admin = () => {
         return <LoginForm onLogin={() => setAuthed(true)} />;
     }
 
+    const closeOnNav = () => setSidebarOpen(false);
+
     return (
         <div className="adm-layout">
+            {/* Mobile hamburger */}
+            <button
+                className={`adm-hamburger ${sidebarOpen ? "open" : ""}`}
+                onClick={() => setSidebarOpen((v) => !v)}
+                aria-label="Menüyü aç/kapat"
+            >
+                <span /><span /><span />
+            </button>
+
+            {/* Mobile overlay */}
+            <div
+                className={`adm-sidebar-overlay ${sidebarOpen ? "open" : ""}`}
+                onClick={() => setSidebarOpen(false)}
+            />
+
             {/* Sidebar */}
-            <aside className="adm-sidebar">
+            <aside className={`adm-sidebar ${sidebarOpen ? "open" : ""}`}>
                 <div className="adm-sidebar-logo">
                     <h2>
                         🛡️ Admin
@@ -75,7 +93,7 @@ const Admin = () => {
                         <button
                             key={n.id}
                             className={`adm-nav-item ${tab === n.id ? "active" : ""}`}
-                            onClick={() => setTab(n.id)}
+                            onClick={() => { setTab(n.id); closeOnNav(); }}
                         >
                             <span className="adm-nav-icon">{n.icon}</span>
                             {n.label}
@@ -84,7 +102,7 @@ const Admin = () => {
                 </nav>
 
                 <div className="adm-sidebar-footer">
-                    <a href="/" className="adm-nav-item">
+                    <a href="/" className="adm-nav-item" onClick={closeOnNav}>
                         <span className="adm-nav-icon">🏠</span>
                         Siteye Dön
                     </a>
