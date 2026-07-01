@@ -3,17 +3,13 @@ import PlayChatPanel from "../play/PlayChatPanel";
 import { config } from "../../config";
 import "./FloatingChat.css";
 
-interface FloatingChatProps {
-  welcomeContent: string;
-}
-
 const TEASER_SEEN_KEY = "emir-chat-teaser-seen";
 const TEASER_DELAY_MS = 3500;
 const TEASER_AUTO_HIDE_MS = 9000;
 
 const firstName = config.developer.fullName.split(" ")[0];
 
-export const FloatingChat = ({ welcomeContent }: FloatingChatProps) => {
+export const FloatingChat = () => {
   const [open, setOpen] = useState(false);
   const [showTeaser, setShowTeaser] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -229,7 +225,7 @@ export const FloatingChat = ({ welcomeContent }: FloatingChatProps) => {
               </svg>
             </button>
           )}
-          <PlayChatPanel welcomeContent={welcomeContent} />
+          <PlayChatPanel />
         </div>
       )}
     </div>

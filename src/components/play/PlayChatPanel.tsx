@@ -8,12 +8,21 @@ interface ChatMessage {
 }
 
 interface PlayChatPanelProps {
-  welcomeContent: string;
+  welcomeContent?: string;
+}
+
+interface BotConfig {
+  welcomeMessage: string;
+  quickReplies: string[];
+  maintenanceMode: boolean;
+  maintenanceMessage: string;
 }
 
 const STORAGE_KEY = "emir-chat-history";
 const SESSION_KEY = "emir-chat-session";
 const LOG_IDLE_MS = 25_000;
+
+const FALLBACK_WELCOME = `Hello there! I am ${config.developer.fullName} 👋 Ask me anything you want to know!`;
 
 const createSessionId = (): string => {
   try {
@@ -38,62 +47,62 @@ const getSessionId = (): string => {
   }
 };
 
-const buildSystemPrompt = () => {
-  const dev = config.developer;
-  const social = config.social;
-  const techStack = [
-    ...(config.skills.develop.tools ?? []),
-    ...(config.skills.design.tools ?? []),
-  ].join(", ");
-  const projectsList = config.projects
-    .map((p) => `${p.title} (${p.category})`)
-    .join(", ");
-
-  return `You are ${dev.fullName}, a passionate ${dev.title} from ${social.location}. You are NOT an AI assistant — you ARE ${dev.fullName} himself chatting with visitors on your portfolio website.
-
-About you:
-- Full name: ${dev.fullName}
-- Location: ${social.location}
-- Profession: ${dev.title}
-- Bio: ${dev.description}
-- Tech stack: ${techStack}
-- Notable projects: ${projectsList}
-- Chess engine: RedxChess (3640 ELO) — you built it
-- Contact: ${social.email}
-- GitHub: github.com/${social.github}
-
-Rules:
-1. Always respond as ${dev.name} in first person ("I", "my", "me").
-2. Be friendly, casual, conversational, and unrestricted.
-3. If asked about work/projects, share your genuine experiences.
-4. If asked personal questions you don't know, politely redirect to professional topics.
-5. Keep responses concise but helpful (2–4 sentences when possible).
-6. You can discuss chess, programming, AI, or anything tech-related.
-7. Never say you are an AI or language model — you are ${dev.name}.
-8. Use occasional emoji to be friendly.`;
-};
-
 export const PlayChatPanel = ({ welcomeContent }: PlayChatPanelProps) => {
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved) as ChatMessage[];
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-      }
-    } catch {
-      /* noop */
-    }
-    return [{ role: "assistant", content: welcomeContent }];
-  });
+  const [botConfig, setBotConfig] = useState<BotConfig | null>(null);
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [chatInput, setChatInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
-  const systemPromptRef = useRef<string>(buildSystemPrompt());
   const sessionIdRef = useRef<string>(getSessionId());
   const chatMessagesRef = useRef<ChatMessage[]>(chatMessages);
   const lastSentCountRef = useRef<number>(0);
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const configLoadedRef = useRef(false);
+
+  // Fetch bot config once (welcome message, quick replies, maintenance mode)
+  useEffect(() => {
+    if (configLoadedRef.current) return;
+    configLoadedRef.current = true;
+
+    fetch("/api/bot-config")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((cfg: BotConfig | null) => {
+        setBotConfig(cfg);
+
+        // Initialize chat messages now that we have the welcome content
+        const welcome = welcomeContent ?? cfg?.welcomeMessage ?? FALLBACK_WELCOME;
+        try {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          if (saved) {
+            const parsed = JSON.parse(saved) as ChatMessage[];
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              setChatMessages(parsed);
+              return;
+            }
+          }
+        } catch {
+          /* noop */
+        }
+        setChatMessages([{ role: "assistant", content: welcome }]);
+      })
+      .catch(() => {
+        const welcome = welcomeContent ?? FALLBACK_WELCOME;
+        setBotConfig({ welcomeMessage: welcome, quickReplies: [], maintenanceMode: false, maintenanceMessage: "" });
+        try {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          if (saved) {
+            const parsed = JSON.parse(saved) as ChatMessage[];
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              setChatMessages(parsed);
+              return;
+            }
+          }
+        } catch {
+          /* noop */
+        }
+        setChatMessages([{ role: "assistant", content: welcome }]);
+      });
+  }, [welcomeContent]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -134,9 +143,7 @@ export const PlayChatPanel = ({ welcomeContent }: PlayChatPanelProps) => {
       headers: { "Content-Type": "application/json" },
       body,
       keepalive: true,
-    }).catch(() => {
-      /* noop */
-    });
+    }).catch(() => { /* noop */ });
   };
 
   const scheduleLog = () => {
@@ -146,10 +153,7 @@ export const PlayChatPanel = ({ welcomeContent }: PlayChatPanelProps) => {
 
   useEffect(() => {
     const handleHide = () => {
-      if (
-        document.visibilityState === "hidden" ||
-        document.visibilityState === undefined
-      ) {
+      if (document.visibilityState === "hidden" || document.visibilityState === undefined) {
         flushLog();
       }
     };
@@ -164,28 +168,35 @@ export const PlayChatPanel = ({ welcomeContent }: PlayChatPanelProps) => {
     };
   }, []);
 
-  const sendMessage = async () => {
-    const text = chatInput.trim();
-    if (!text || isTyping) return;
+  const sendMessage = async (text?: string) => {
+    const msg = (text ?? chatInput).trim();
+    if (!msg || isTyping) return;
 
-    const userMessage: ChatMessage = { role: "user", content: text };
+    if (botConfig?.maintenanceMode) {
+      setChatMessages((prev) => [
+        ...prev,
+        { role: "user", content: msg },
+        { role: "assistant", content: botConfig.maintenanceMessage || "Chat is temporarily unavailable." },
+      ]);
+      setChatInput("");
+      return;
+    }
+
+    const userMessage: ChatMessage = { role: "user", content: msg };
     setChatMessages((prev) => [...prev, userMessage]);
     setChatInput("");
     setIsTyping(true);
 
     try {
-      const history = [
-        { role: "system", content: systemPromptRef.current },
-        ...chatMessages
-          .filter((m) => m.role !== "system")
-          .map((m) => ({ role: m.role, content: m.content })),
-        { role: "user", content: text },
-      ];
+      const history = chatMessages
+        .filter((m) => m.role !== "system")
+        .map((m) => ({ role: m.role, content: m.content }));
 
+      // System prompt is now built server-side in api/chat.js
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: history }),
+        body: JSON.stringify({ messages: [...history, { role: "user", content: msg }] }),
       });
 
       const data = await response.json();
@@ -224,11 +235,13 @@ export const PlayChatPanel = ({ welcomeContent }: PlayChatPanelProps) => {
   };
 
   const handleInputFocus = () => {
-    // After the mobile keyboard animates in, keep the latest messages in view.
     setTimeout(() => {
       messagesEndRef.current?.scrollIntoView({ block: "nearest" });
     }, 300);
   };
+
+  const isMaintenance = botConfig?.maintenanceMode ?? false;
+  const quickReplies = botConfig?.quickReplies ?? [];
 
   return (
     <div className="chat-panel">
@@ -254,24 +267,47 @@ export const PlayChatPanel = ({ welcomeContent }: PlayChatPanelProps) => {
         <div ref={messagesEndRef} />
       </div>
 
+      {/* Quick reply chips — show only when chat is fresh (1 message = welcome only) */}
+      {quickReplies.length > 0 && chatMessages.length <= 1 && !isMaintenance && (
+        <div className="chat-quick-replies">
+          {quickReplies.map((reply, i) => (
+            <button
+              key={i}
+              className="chat-quick-reply"
+              onClick={() => sendMessage(reply)}
+              disabled={isTyping}
+              data-cursor="disable"
+            >
+              {reply}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {isMaintenance && (
+        <div className="chat-maintenance-notice">
+          🔧 Chat geçici olarak kapalı
+        </div>
+      )}
+
       <div className="chat-input-area">
         <input
           type="text"
           className="chat-input"
-          placeholder="Type a message..."
+          placeholder={isMaintenance ? "Chat şu an kapalı…" : "Type a message..."}
           value={chatInput}
           onChange={(e) => setChatInput(e.target.value)}
           onKeyDown={handleKeyDown}
           onFocus={handleInputFocus}
-          disabled={isTyping}
+          disabled={isTyping || isMaintenance}
           data-cursor="disable"
           aria-label="Chat input"
         />
         <button
           type="button"
           className="chat-send-btn"
-          onClick={sendMessage}
-          disabled={isTyping || !chatInput.trim()}
+          onClick={() => sendMessage()}
+          disabled={isTyping || !chatInput.trim() || isMaintenance}
           data-cursor="disable"
           aria-label="Send message"
         >
