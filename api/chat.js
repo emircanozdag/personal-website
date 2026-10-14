@@ -1,4 +1,35 @@
-import { getSettings } from './_lib/store.js';
+import { getSettings, getRedis, KEYS } from './_lib/store.js';
+
+const CHAT_RATE_LIMIT = 20; // requests per window per IP
+const CHAT_RATE_WINDOW_SECONDS = 60;
+const MAX_MESSAGES = 30;
+const MAX_CONTENT_LENGTH = 2000;
+
+async function checkChatRateLimit(ip) {
+    try {
+        const redis = getRedis();
+        const key = KEYS.CHAT_RATE_LIMIT(ip);
+        const count = await redis.incr(key);
+        if (count === 1) {
+            await redis.expire(key, CHAT_RATE_WINDOW_SECONDS);
+        }
+        return count <= CHAT_RATE_LIMIT;
+    } catch {
+        return true; // allow on Redis error so the chat stays usable
+    }
+}
+
+function sanitizeMessages(messages) {
+    if (!Array.isArray(messages) || messages.length === 0) return null;
+    const clean = [];
+    // Keep only the most recent turns so long conversations keep working
+    for (const m of messages.slice(-MAX_MESSAGES)) {
+        if (!m || (m.role !== 'user' && m.role !== 'assistant')) return null;
+        if (typeof m.content !== 'string' || m.content.length > MAX_CONTENT_LENGTH) return null;
+        clean.push({ role: m.role, content: m.content });
+    }
+    return clean;
+}
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -12,6 +43,11 @@ export default async function handler(req, res) {
 
     if (!apiKey) {
         return res.status(500).json({ error: 'Server configuration error: Missing API Key' });
+    }
+
+    const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
+    if (!(await checkChatRateLimit(ip))) {
+        return res.status(429).json({ error: 'Too many requests, please slow down.' });
     }
 
     const settings = await getSettings();
@@ -29,7 +65,10 @@ export default async function handler(req, res) {
         });
     }
 
-    const { messages = [] } = req.body;
+    const messages = sanitizeMessages(req.body?.messages);
+    if (!messages) {
+        return res.status(400).json({ error: 'Invalid messages' });
+    }
 
     // Build server-side system prompt from Redis settings
     const systemMessage = {
@@ -39,7 +78,7 @@ export default async function handler(req, res) {
 
     const history = [
         systemMessage,
-        ...messages.filter((m) => m.role !== 'system'),
+        ...messages,
     ];
 
     try {
@@ -51,7 +90,7 @@ export default async function handler(req, res) {
             },
             body: JSON.stringify({
                 messages: history,
-                model: settings.model || 'llama-3.3-70b-versatile',
+                model: settings.model || 'openai/gpt-oss-120b',
             }),
         });
 
@@ -64,6 +103,6 @@ export default async function handler(req, res) {
         return res.status(200).json(data);
     } catch (error) {
         console.error('Groq API Error:', error);
-        return res.status(500).json({ error: 'Internal Server Error', details: error.message });
+        return res.status(500).json({ error: 'Internal Server Error' });
     }
 }
