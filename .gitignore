@@ -29,3 +29,6 @@ backup/
 redoxchess-engine/
 .vercel
 .env*
+
+*.tsbuildinfo
+!.env.example
