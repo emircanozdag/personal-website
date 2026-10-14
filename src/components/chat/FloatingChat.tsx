@@ -194,7 +194,7 @@ export const FloatingChat = () => {
             ✕
           </span>
           <span className="floating-chat__teaser-text">
-            Hey! I'm {firstName} <span aria-hidden>👋</span> Ask me anything.
+            Hi <span aria-hidden>👋</span> I'm {firstName}'s AI assistant. Ask me anything about his work.
           </span>
         </button>
       )}

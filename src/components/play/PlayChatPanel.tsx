@@ -22,7 +22,7 @@ const STORAGE_KEY = "emir-chat-history";
 const SESSION_KEY = "emir-chat-session";
 const LOG_IDLE_MS = 25_000;
 
-const FALLBACK_WELCOME = `Hello there! I am ${config.developer.fullName} 👋 Ask me anything you want to know!`;
+const FALLBACK_WELCOME = `Hi! 👋 I'm an AI assistant trained on ${config.developer.name}'s experience and projects. Ask me anything about his work.`;
 
 const createSessionId = (): string => {
   try {

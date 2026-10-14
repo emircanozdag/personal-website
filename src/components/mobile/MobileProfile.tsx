@@ -1,9 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   FaGithub,
-  FaInstagram,
   FaLinkedinIn,
-  FaXTwitter,
 } from "react-icons/fa6";
 import {
   MdAccessTime,
@@ -294,18 +292,6 @@ const MobileProfile = () => {
       href: contact.linkedin,
       icon: <FaLinkedinIn />,
     },
-    {
-      key: "twitter",
-      label: "X / Twitter",
-      href: contact.twitter,
-      icon: <FaXTwitter />,
-    },
-    {
-      key: "instagram",
-      label: "Instagram",
-      href: contact.instagram,
-      icon: <FaInstagram />,
-    },
   ];
 
   return (
@@ -539,9 +525,10 @@ const MobileProfile = () => {
             {projects.slice(0, 5).map((project) => (
               <a
                 key={project.id}
-                href="#work"
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mp-project"
-                onClick={(e) => e.preventDefault()}
                 aria-label={project.title}
               >
                 <div className="mp-project__thumb">
