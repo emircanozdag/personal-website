@@ -25,10 +25,10 @@ export const seoPages: Record<SeoPageKey, PageSeo> = {
   myworks: {
     title: "Projects & Works | Emir Can Özdağ",
     description:
-      "Explore full-stack and real-time projects by Emir Can Özdağ — an AI receipt-splitting app, a real-time multiplayer game and an interactive 3D portfolio with serverless APIs.",
+      "Explore .NET microservices, full-stack and real-time projects by Emir Can Özdağ — an event-driven telecom platform with Kafka and RabbitMQ, an AI receipt-splitting app, a real-time multiplayer game and an interactive 3D portfolio with serverless APIs.",
     path: "/myworks",
     keywords:
-      "Emir Can Özdağ projects, full-stack portfolio, React, TypeScript, Socket.io, Cloudflare Workers",
+      "Emir Can Özdağ projects, .NET microservices, Kafka, RabbitMQ, full-stack portfolio, React, TypeScript, Socket.io, Cloudflare Workers",
   },
   play: {
     title: "Play Chess vs 3640 ELO Engine | Emir Can Özdağ",
