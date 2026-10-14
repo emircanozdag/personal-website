@@ -22,6 +22,11 @@ import DinqCard from "./DinqCard";
 import "../styles/MobileProfile.css";
 
 const techStackChips = [
+  "C#",
+  ".NET",
+  "Kafka",
+  "RabbitMQ",
+  "Redis",
   "Python",
   "TypeScript",
   "JavaScript",
@@ -44,6 +49,8 @@ const techStackChips = [
 ];
 
 const heroMarqueeChips = [
+  ".NET",
+  "C#",
   "React",
   "TypeScript",
   "Python",
@@ -63,10 +70,10 @@ const getDisplayYear = (period: string) => {
 };
 
 const MOBILE_HERO_ROLES = [
-  "AI & Full-Stack Developer",
-  "LLM & Agent Engineer",
-  "Chess Engine Author",
-  "ML Tinkerer & Automator",
+  "Senior Full-Stack Developer",
+  ".NET & React Engineer",
+  "Event-Driven Systems Builder",
+  "AI & Chess Engine Tinkerer",
 ];
 
 const HERO_TIMEZONE = "Europe/Istanbul";
@@ -215,8 +222,11 @@ const MobileProfile = () => {
   );
   const currentRole = MOBILE_HERO_ROLES[roleIndex];
 
+  const yearsOfExperience =
+    new Date().getFullYear() -
+    Math.min(...experiences.map((exp) => parseInt(exp.period, 10)));
   const yearsCount = useCountUp(
-    experiences.length,
+    yearsOfExperience,
     statsStarted,
     1200,
     prefersReducedMotion
@@ -365,7 +375,7 @@ const MobileProfile = () => {
             <strong>
               <span aria-hidden>{yearsCount}+</span>
               <span className="mp-hero__stats-sr">
-                {experiences.length}+
+                {yearsOfExperience}+
               </span>
             </strong>
             <span>Years</span>

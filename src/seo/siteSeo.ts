@@ -15,12 +15,12 @@ export interface PageSeo {
 
 export const seoPages: Record<SeoPageKey, PageSeo> = {
   home: {
-    title: "Emir Can Özdağ - AI Developer | Python Engineer",
+    title: "Emir Can Özdağ - Full-Stack Developer | .NET, React & AI",
     description:
-      "Emir Can Özdağ is an AI & Full-Stack Developer from Ankara, Turkey. Building LLM chatbots, AI agents, chess engines, and modern web apps with Python, React, and PyTorch.",
+      "Emir Can Özdağ is a Senior Full-Stack Developer with 6+ years of experience building scalable .NET Core backends, event-driven systems with Kafka and RabbitMQ, and modern React/TypeScript front ends — at Türk Telekom and TRT scale.",
     path: "/",
     keywords:
-      "Emir Can Özdağ, AI developer, Python engineer, full-stack developer, machine learning, LLM, chatbot, Ankara Turkey, React developer, PyTorch",
+      "Emir Can Özdağ, full-stack developer, senior .NET developer, C# developer, ASP.NET Core, React developer, TypeScript, Kafka, RabbitMQ, microservices, backend developer, Ankara Turkey",
   },
   myworks: {
     title: "Projects & Works | Emir Can Özdağ",
@@ -62,15 +62,16 @@ export const getPersonSchema = () => ({
     addressCountry: "TR",
   },
   knowsAbout: [
-    "Artificial Intelligence",
-    "Machine Learning",
-    "Deep Learning",
-    "Natural Language Processing",
-    "Python",
+    "C#",
+    ".NET Core",
+    "ASP.NET Core",
+    "Apache Kafka",
+    "RabbitMQ",
+    "Redis",
     "React",
     "TypeScript",
+    "Microservices",
     "Large Language Models",
-    "Chess Engine Development",
   ],
   sameAs: [config.contact.github, config.contact.linkedin],
 });

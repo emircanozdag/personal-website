@@ -42,14 +42,14 @@ const SeoHead = ({ page }: SeoHeadProps) => {
       <meta property="og:description" content={description} />
       <meta property="og:url" content={canonical} />
       <meta property="og:image" content={DEFAULT_OG_IMAGE} />
-      <meta property="og:image:alt" content={`${SITE_NAME} - AI & Full-Stack Developer`} />
+      <meta property="og:image:alt" content={`${SITE_NAME} - Senior Full-Stack Developer`} />
       <meta property="og:locale" content="en_US" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={DEFAULT_OG_IMAGE} />
-      <meta name="twitter:image:alt" content={`${SITE_NAME} - AI & Full-Stack Developer`} />
+      <meta name="twitter:image:alt" content={`${SITE_NAME} - Senior Full-Stack Developer`} />
 
       {jsonLd.map((schema, index) => (
         <script key={index} type="application/ld+json">
