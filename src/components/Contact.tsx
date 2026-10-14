@@ -5,7 +5,7 @@ import {
   MdContentCopy,
   MdCheck,
 } from "react-icons/md";
-import { FaGithub, FaLinkedinIn, FaXTwitter, FaInstagram } from "react-icons/fa6";
+import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import "./styles/Contact.css";
 import { config } from "../config";
 import gsap from "gsap";
@@ -86,16 +86,6 @@ const Contact = () => {
       label: "LinkedIn",
       href: config.contact.linkedin,
       Icon: FaLinkedinIn,
-    },
-    {
-      label: "Twitter / X",
-      href: config.contact.twitter,
-      Icon: FaXTwitter,
-    },
-    {
-      label: "Instagram",
-      href: config.contact.instagram,
-      Icon: FaInstagram,
     },
   ];
 

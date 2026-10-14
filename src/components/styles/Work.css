@@ -500,3 +500,15 @@
     font-size: 14px;
   }
 }
+.work-link {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--accentColor, #c2a4ff);
+  font-size: 14px;
+  text-decoration: none;
+  pointer-events: auto;
+}
+
+.work-link:hover {
+  text-decoration: underline;
+}

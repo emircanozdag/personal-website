@@ -25,10 +25,10 @@ export const seoPages: Record<SeoPageKey, PageSeo> = {
   myworks: {
     title: "Projects & Works | Emir Can Özdağ",
     description:
-      "Explore AI, blockchain, and full-stack projects by Emir Can Özdağ — including Drishti LLM chatbot, RedxChess engine, VoteChain, Floodhub, and more.",
+      "Explore full-stack and real-time projects by Emir Can Özdağ — an AI receipt-splitting app, a real-time multiplayer game and an interactive 3D portfolio with serverless APIs.",
     path: "/myworks",
     keywords:
-      "Emir Can Özdağ projects, Drishti AI, RedxChess, VoteChain, AI portfolio, Python projects, React portfolio",
+      "Emir Can Özdağ projects, full-stack portfolio, React, TypeScript, Socket.io, Cloudflare Workers",
   },
   play: {
     title: "Play Chess vs 3640 ELO Engine | Emir Can Özdağ",

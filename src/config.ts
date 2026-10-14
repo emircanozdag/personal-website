@@ -67,76 +67,36 @@ export const config = {
     projects: [
         {
             id: 1,
-            title: "Drishti",
-            category: "AI / LLM",
-            technologies: "Python, PyTorch, Transformers, FastAPI, React, MongoDB",
-            image: "/images/drishti.png",
-            description: "Bangladesh's first intelligent advanced AI chatbot powered by a custom Large Language Model. Features natural language understanding, contextual conversations, and multilingual support including Bengali."
+            title: "Akıllı Hesap Bölüşme",
+            category: "Full Stack / AI",
+            technologies: "TypeScript, React Native, React, Cloudflare Workers, AI OCR, GitHub Actions",
+            image: "/images/hesap-bolusme.svg",
+            link: "https://github.com/emircanozdag/akilli-hesap-bolusme",
+            description: "Cross-platform (iOS, Android, Web) bill-splitting app: scan a receipt with the camera, extract items and prices with AI-based OCR, and split costs within a group. TypeScript monorepo with separate mobile, web, server, split-engine and AI-orchestrator packages, plus CI."
         },
         {
             id: 2,
-            title: "VoteChain",
-            category: "Blockchain",
-            technologies: "Solidity, Web3.js, React, Ethereum, IPFS, MetaMask, Node.js",
-            image: "/images/votechain.png",
-            description: "A decentralized election system built on blockchain technology ensuring transparent, tamper-proof, and verifiable voting. Features smart contracts for vote integrity and real-time result tracking."
+            title: "Futbol Düellosu",
+            category: "Real-time / Full Stack",
+            technologies: "TypeScript, Node.js, Socket.io, React, Vite, PWA, Python",
+            image: "/images/futbol-duello.svg",
+            link: "https://github.com/emircanozdag/futbol-duello",
+            description: "Real-time 1v1 football trivia game: two clubs, one player, first correct answer wins. Server-authoritative room state over Socket.io, a bot opponent, a Python data pipeline that builds the dataset from Wikidata, and unit plus end-to-end smoke tests."
         },
         {
             id: 3,
-            title: "EIE - Earthquake Impact Estimator",
-            category: "IoT / Hardware",
-            technologies: "Arduino, C++, IoT Sensors, Python, ML, React",
-            image: "/images/eie.svg",
-            description: "A practical circuit-based IoT system utilizing Arduino to predict earthquakes before they strike. Integrates hardware sensors for real-time seismic detection and impact estimation."
-        },
-        {
-            id: 4,
-            title: "GameKroy",
-            category: "Full Stack",
-            technologies: "React, Node.js, MongoDB, Express, Stripe, TailwindCSS",
-            image: "/images/gamekroy.png",
-            description: "A full-featured e-commerce platform for gaming products. Includes user authentication, product catalog, shopping cart, secure payments, order tracking, and admin dashboard."
-        },
-        {
-            id: 5,
-            title: "RedxChess",
-            category: "AI / Game Engine",
-            technologies: "Python, C++, Neural Networks, Bitboards, UCI Protocol",
-            image: "/images/redxchess.png",
-            description: "A high-performance chess engine rated 3640 ELO. Features advanced search algorithms, neural network evaluation, and optimized bitboard representation for lightning-fast move generation."
-        },
-        {
-            id: 6,
-            title: "Floodhub",
-            category: "AI / ML",
-            technologies: "Python, TensorFlow, Pandas, React, FastAPI, GIS",
-            image: "/images/floodhub.png",
-            description: "A flood prediction model specifically designed for Bangladesh's river systems. Analyzes weather patterns, water levels, and historical data to provide accurate flood forecasts and alerts."
-        },
-        {
-            id: 7,
-            title: "Phoenix",
-            category: "AI Assistant",
-            technologies: "Python, Speech Recognition, PyAutoGUI, OpenAI API, Tkinter",
-            image: "/images/phoenix.png",
-            description: "A JARVIS-inspired personal AI desktop assistant. Controls system functions, manages tasks, answers queries, automates workflows, and provides voice-activated computing experience."
-        },
-        {
-            id: 8,
-            title: "HekTools",
-            category: "Security / Android",
-            technologies: "Kotlin, Android SDK, Firebase, Python, Encryption",
-            image: "/images/hektools.png",
-            description: "An advanced Android monitoring and security research tool. Features remote device management, activity logging, and encrypted data transmission for security testing purposes."
+            title: "emircanozdag.com",
+            category: "Full Stack / Serverless",
+            technologies: "React, TypeScript, Three.js, GSAP, Vercel Functions, Upstash Redis, LLM",
+            image: "/images/portfolio.svg",
+            link: "https://github.com/emircanozdag/personal-website",
+            description: "This site: an interactive 3D portfolio with serverless APIs for an AI chat assistant, a JWT-protected admin panel, Redis-backed settings and per-IP rate limiting, and a playable chess page."
         }
     ],
     contact: {
         email: "emircanozdag@gmail.com",
         github: "https://github.com/emircanozdag",
-        linkedin: "https://www.linkedin.com/in/emircanozdag/",
-        twitter: "https://x.com/i/flow/login",
-        facebook: "https://www.facebook.com/redoyanulhaque.hacker.official",
-        instagram: "https://www.instagram.com/accounts/login/"
+        linkedin: "https://www.linkedin.com/in/emircanozdag/"
     },
     skills: {
         develop: {

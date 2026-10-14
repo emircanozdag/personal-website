@@ -140,3 +140,15 @@
     grid-template-columns: 1fr;
   }
 }
+
+.myworks-card-link {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--accentColor, #c2a4ff);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.myworks-card-link:hover {
+  text-decoration: underline;
+}

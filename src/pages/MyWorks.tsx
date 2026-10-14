@@ -13,8 +13,8 @@ const MyWorks = () => {
           All <span>Works</span> — Projects by Emir Can Özdağ
         </h1>
         <p>
-          A collection of AI, blockchain, and full-stack projects including Drishti LLM chatbot,
-          RedxChess engine, VoteChain, and more.
+          A selection of full-stack and real-time projects — from cross-platform TypeScript
+          apps to serverless APIs.
         </p>
       </div>
 
@@ -30,6 +30,14 @@ const MyWorks = () => {
               <p className="myworks-card-category">{project.category}</p>
               <p className="myworks-card-description">{project.description}</p>
               <p className="myworks-card-tech">{project.technologies}</p>
+              <a
+                className="myworks-card-link"
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View on GitHub →
+              </a>
             </div>
           </div>
         ))}
