@@ -5,8 +5,9 @@ let _redis = null;
 export function getRedis() {
     if (!_redis) {
         _redis = new Redis({
-            url: process.env.UPSTASH_REDIS_REST_URL,
-            token: process.env.UPSTASH_REDIS_REST_TOKEN,
+            // KV_* names are what the Vercel Marketplace Upstash integration injects
+            url: process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL,
+            token: process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN,
         });
     }
     return _redis;
@@ -21,6 +22,7 @@ export const KEYS = {
     STATS_TOTAL_MESSAGES: 'stats:total_messages',
     statsDaily: (date) => `stats:daily:${date}`,
     RATE_LIMIT: (ip) => `rate:login:${ip}`,
+    CHAT_RATE_LIMIT: (ip) => `rate:chat:${ip}`,
     FAQ: 'bot:faq',
 };
 
@@ -48,7 +50,7 @@ Rules:
 7. Never say you are an AI or language model — you are Emir Can.
 8. Use occasional emoji to be friendly.`,
     welcomeMessage: `Hello there! I am Emir Can Özdağ 👋 Ask me anything you want to know!`,
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     useEmoji: true,
     language: 'auto',
     maintenanceMode: false,
