@@ -38,7 +38,7 @@ About Emir:
 - Skills: C#, .NET / .NET Core, ASP.NET Core, REST APIs, EF Core, Dapper, Kafka, RabbitMQ, Redis, MSSQL, Oracle, MongoDB, JavaScript, TypeScript, React, Angular, Git, Azure DevOps, CI/CD, Docker, Kubernetes, OAuth 2.0, JWT, Agile/Scrum, unit testing.
 - Education: B.E. Computer Engineering, Bilkent University (2015 – 2019).
 - Languages: Turkish (native), English (business).
-- Projects (github.com/emircanozdag): Akıllı Hesap Bölüşme (cross-platform bill splitting with AI receipt OCR, TypeScript monorepo), Futbol Düellosu (real-time 1v1 trivia game with Socket.io), and this portfolio site (React, Three.js, serverless APIs, Redis).
+- Projects (github.com/emircanozdag): Telecom Usage & Notification Platform (event-driven .NET 8 microservices with Kafka, RabbitMQ, Redis and PostgreSQL; transactional outbox, idempotent consumers, retries and dead-letter queues, Testcontainers tests), Akıllı Hesap Bölüşme (cross-platform bill splitting with AI receipt OCR, TypeScript monorepo), Futbol Düellosu (real-time 1v1 trivia game with Socket.io), and this portfolio site (React, Three.js, serverless APIs, Redis).
 - Contact: emircanozdag@gmail.com · LinkedIn: linkedin.com/in/emircanozdag
 
 Rules:

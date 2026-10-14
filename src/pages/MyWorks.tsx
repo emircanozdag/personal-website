@@ -13,8 +13,8 @@ const MyWorks = () => {
           All <span>Works</span> — Projects by Emir Can Özdağ
         </h1>
         <p>
-          A selection of full-stack and real-time projects — from cross-platform TypeScript
-          apps to serverless APIs.
+          A selection of backend, full-stack and real-time projects — from event-driven .NET
+          microservices to cross-platform TypeScript apps.
         </p>
       </div>
 

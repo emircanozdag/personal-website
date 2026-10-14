@@ -67,6 +67,15 @@ export const config = {
     projects: [
         {
             id: 1,
+            title: "Telecom Usage & Notification Platform",
+            category: "Microservices / .NET",
+            technologies: "C#, .NET 8, ASP.NET Core, Kafka, RabbitMQ, Redis, PostgreSQL, EF Core, YARP, Docker, Testcontainers",
+            image: "/images/telecom-platform.svg",
+            link: "https://github.com/emircanozdag/telecom-platform",
+            description: "Event-driven microservices that track mobile data usage, bill overage and alert subscribers near their quota. Transactional outbox to Kafka, idempotent consumers, optimistic concurrency, RabbitMQ work queues with retries and dead-letter queues, Redis caching, a YARP gateway, and Testcontainers integration tests in CI."
+        },
+        {
+            id: 2,
             title: "Akıllı Hesap Bölüşme",
             category: "Full Stack / AI",
             technologies: "TypeScript, React Native, React, Cloudflare Workers, AI OCR, GitHub Actions",
@@ -75,7 +84,7 @@ export const config = {
             description: "Cross-platform (iOS, Android, Web) bill-splitting app: scan a receipt with the camera, extract items and prices with AI-based OCR, and split costs within a group. TypeScript monorepo with separate mobile, web, server, split-engine and AI-orchestrator packages, plus CI."
         },
         {
-            id: 2,
+            id: 3,
             title: "Futbol Düellosu",
             category: "Real-time / Full Stack",
             technologies: "TypeScript, Node.js, Socket.io, React, Vite, PWA, Python",
@@ -84,7 +93,7 @@ export const config = {
             description: "Real-time 1v1 football trivia game: two clubs, one player, first correct answer wins. Server-authoritative room state over Socket.io, a bot opponent, a Python data pipeline that builds the dataset from Wikidata, and unit plus end-to-end smoke tests."
         },
         {
-            id: 3,
+            id: 4,
             title: "emircanozdag.com",
             category: "Full Stack / Serverless",
             technologies: "React, TypeScript, Three.js, GSAP, Vercel Functions, Upstash Redis, LLM",
