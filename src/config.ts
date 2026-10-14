@@ -2,8 +2,8 @@ export const config = {
     developer: {
         name: "Emir Can",
         fullName: "Emir Can Özdağ",
-        title: "AI & Full-Stack Developer",
-        description: "AI & Full-Stack Developer building intelligent systems and modern web applications. Passionate about machine learning, deep learning, and creating next-gen autonomous agents."
+        title: "Senior Full-Stack Developer",
+        description: "Senior Full-Stack Developer building scalable .NET Core backends, event-driven systems and modern React front ends, with a passion for AI-powered products."
     },
     social: {
         github: "emircanozdag",
@@ -12,101 +12,56 @@ export const config = {
     },
     about: {
         title: "About Me",
-        lead: "Code is poetry — AI is the canvas.",
-        description: "I am a self-taught AI & Full-Stack Developer based in Ankara, Turkey. I build intelligent systems, chatbots, and modern web applications. My expertise spans Machine Learning, Deep Learning, NLP, and Full-Stack Web Development with React, Node.js, and Python. Currently shaping next-gen AI Agents and JARVIS-like personal assistants with a competitive programming mindset and a deep passion for automation.",
+        lead: "Scalable backends, clean front ends, shipped end to end.",
+        description: "I am a Senior Full-Stack Developer based in Ankara, Turkey, with 6+ years of experience building high-performance enterprise systems at Türk Telekom and TRT scale. On the backend I work with C#, .NET Core and ASP.NET Core, designing RESTful APIs and event-driven services with Kafka, RabbitMQ and Redis; on the frontend I build responsive interfaces with React and TypeScript. I own features end to end in Agile teams — from analysis and technical design to CI/CD with Azure DevOps, Docker and Kubernetes — and outside work I build AI-powered side projects like LLM chatbots and a chess engine.",
         highlights: [
-            "Self-taught",
+            "6+ Years",
             "Ankara, Turkey",
-            "AI Agents",
-            "ML & NLP",
-            "Full-Stack",
-            "Automation"
+            ".NET Core",
+            "React & TypeScript",
+            "Event-Driven",
+            "CI/CD & Cloud"
         ]
     },
     experiences: [
         {
-            position: "Learning Something New",
-            company: "Self-Development",
-            period: "2025 - Present",
+            position: "Senior .NET Developer",
+            company: "Türk Telekom",
+            period: "2023 - Present",
             location: "Ankara, Turkey",
-            description: "Continuously exploring emerging technologies, researching advanced AI systems, and pushing the boundaries of what's possible in tech.",
+            description: "Developing .NET Core backend services and RESTful APIs in a large-scale telecom environment, owning features end to end from analysis and design to deployment and post-release support.",
             responsibilities: [
-                "Researching cutting-edge AI and ML technologies",
-                "Experimenting with new frameworks and tools",
-                "Contributing to open-source projects",
-                "Building innovative personal projects"
+                "Building .NET Core services and RESTful APIs with EF Core and Dapper",
+                "Improving performance with Redis caching and decoupling services via RabbitMQ",
+                "Writing unit tests to keep backend services reliable",
+                "Shipping through Git and Azure DevOps CI/CD with Docker and Kubernetes in Agile/Scrum teams"
             ],
-            technologies: ["Research", "Innovation", "Open Source", "New Tech"]
+            technologies: ["C#", ".NET Core", "EF Core", "Dapper", "Redis", "RabbitMQ", "Azure DevOps", "Docker", "Kubernetes"]
         },
         {
-            position: "AI Engineer",
-            company: "Freelance & Projects",
-            period: "2025",
+            position: "Backend Developer",
+            company: "TRT",
+            period: "2021 - 2023",
             location: "Ankara, Turkey",
-            description: "Developing intelligent AI systems, chatbots, and machine learning solutions. Building next-gen conversational AI agents and JARVIS-like personal assistants.",
+            description: "Built ASP.NET Core RESTful APIs powering front-end applications and enterprise business systems at broadcast scale.",
             responsibilities: [
-                "Building AI-powered chatbots and conversational agents",
-                "Developing machine learning models with TensorFlow and PyTorch",
-                "Working with LLMs and transformer architectures",
-                "Creating autonomous AI systems and automation tools"
+                "Building RESTful APIs with ASP.NET Core for front-end applications",
+                "Implementing authentication and authorization with OAuth 2.0 and JWT",
+                "Working with MSSQL and Oracle databases on enterprise business applications"
             ],
-            technologies: ["Python", "TensorFlow", "PyTorch", "LLMs", "NLP", "AI Agents"]
+            technologies: ["C#", "ASP.NET Core", "REST API", "OAuth 2.0", "JWT", "MSSQL", "Oracle"]
         },
         {
-            position: "Full-Stack Developer",
-            company: "Freelance & Projects",
-            period: "2024",
-            location: "Ankara, Turkey",
-            description: "Built complete web applications from frontend to backend. Developed responsive UIs, RESTful APIs, and database solutions for various clients and projects.",
+            position: "Software Developer",
+            company: "Apsiyon",
+            period: "2020 - 2021",
+            location: "Istanbul, Turkey",
+            description: "Designed, developed and maintained scalable, high-performance backend systems with C# and .NET Core, alongside web front ends.",
             responsibilities: [
-                "Developing full-stack web applications using React and Node.js",
-                "Building RESTful APIs and integrating databases",
-                "Creating responsive and interactive user interfaces",
-                "Deploying and maintaining web applications"
+                "Building and maintaining backend systems with C# and .NET Core",
+                "Developing web front ends with JavaScript, TypeScript, HTML/CSS and DevExpress"
             ],
-            technologies: ["React", "Node.js", "MongoDB", "Express", "Next.js", "TypeScript"]
-        },
-        {
-            position: "Python Developer",
-            company: "Self-Taught & Projects",
-            period: "2023",
-            location: "Ankara, Turkey",
-            description: "Dove deep into Python programming, building automation scripts, bots, and mastering the fundamentals of software development and problem-solving.",
-            responsibilities: [
-                "Learning Python programming and core concepts",
-                "Building automation scripts and Discord bots",
-                "Exploring data structures and algorithms",
-                "Participating in competitive programming"
-            ],
-            technologies: ["Python", "Automation", "Scripting", "Discord.py", "Problem Solving"]
-        },
-        {
-            position: "Graphic Designer",
-            company: "Freelance",
-            period: "2022",
-            location: "Ankara, Turkey",
-            description: "Started my creative journey as a graphic designer, creating logos, banners, and visual content. This sparked my passion for technology and digital creation.",
-            responsibilities: [
-                "Designing logos and brand identity materials",
-                "Creating social media graphics and banners",
-                "Working with clients on creative projects",
-                "Learning design principles and visual aesthetics"
-            ],
-            technologies: ["Photoshop", "Illustrator", "Canva", "Figma", "Visual Design"]
-        },
-        {
-            position: "Microsoft Office",
-            company: "Begin Learning",
-            period: "2021",
-            location: "Ankara, Turkey",
-            description: "Started my journey into the digital world by learning Microsoft Office tools. This foundational step introduced me to computers and sparked my curiosity for technology.",
-            responsibilities: [
-                "Learning Microsoft Word, Excel, and PowerPoint",
-                "Creating documents and presentations",
-                "Understanding basic computer operations",
-                "Building foundational digital skills"
-            ],
-            technologies: ["MS Word", "MS Excel", "MS PowerPoint", "Computer Basics"]
+            technologies: ["C#", ".NET Core", "JavaScript", "TypeScript", "HTML/CSS", "DevExpress"]
         }
     ],
     projects: [
@@ -185,16 +140,16 @@ export const config = {
     },
     skills: {
         develop: {
-            title: "AI DEVELOPER",
-            description: "Building intelligent systems & AI solutions",
-            details: "Developing AI agents, chatbots, and machine learning models using Python, TensorFlow, and PyTorch. Specializing in LLMs, NLP, deep learning, and autonomous systems.",
-            tools: ["Python", "TensorFlow", "PyTorch", "OpenCV", "Scikit-learn", "LLMs", "NLP", "Deep Learning", "Chatbots", "AI Agents"]
+            title: "BACKEND",
+            description: "Scalable .NET services & event-driven systems",
+            details: "Designing and building high-performance backend services and RESTful APIs with C#, .NET Core and ASP.NET Core. Event-driven architectures with Kafka and RabbitMQ, Redis caching, secure auth with OAuth 2.0/JWT, and delivery through CI/CD on Docker and Kubernetes.",
+            tools: ["C#", ".NET Core", "ASP.NET Core", "EF Core", "Dapper", "Kafka", "RabbitMQ", "Redis", "MSSQL", "Oracle", "Docker", "Kubernetes", "Azure DevOps"]
         },
         design: {
-            title: "FULL-STACK",
-            description: "Modern web development & scalable applications",
-            details: "Building responsive and performant web applications using React, Next.js, Node.js, and databases. Creating seamless user experiences with modern UI/UX principles.",
-            tools: ["React", "Next.js", "Node.js", "TypeScript", "MongoDB", "PostgreSQL", "TailwindCSS", "REST APIs", "Docker", "Git"]
+            title: "FRONTEND & AI",
+            description: "Modern web apps & AI-powered features",
+            details: "Building responsive, performant interfaces with React, Next.js and TypeScript on top of clean REST APIs — and bringing AI into products with LLM chatbots and intelligent automation.",
+            tools: ["React", "Next.js", "TypeScript", "JavaScript", "HTML/CSS", "TailwindCSS", "Node.js", "MongoDB", "LLMs", "Python"]
         }
     }
 };
