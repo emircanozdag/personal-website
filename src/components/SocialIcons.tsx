@@ -2,6 +2,7 @@ import {
   FaGithub,
   FaLinkedinIn,
 } from "react-icons/fa6";
+import { TbDownload } from "react-icons/tb";
 import "./styles/SocialIcons.css";
 import { useEffect } from "react";
 import { config } from "../config";
@@ -67,6 +68,17 @@ const SocialIcons = () => {
           </a>
         </span>
       </div>
+      <a
+        className="resume-button"
+        href={config.contact.cv}
+        download="Emir_Can_Ozdag_CV.pdf"
+        data-cursor="disable"
+      >
+        RESUME
+        <span>
+          <TbDownload />
+        </span>
+      </a>
     </div>
   );
 };

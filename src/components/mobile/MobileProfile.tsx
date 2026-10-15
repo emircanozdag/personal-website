@@ -15,6 +15,7 @@ import {
   MdWorkOutline,
   MdCode,
 } from "react-icons/md";
+import { TbDownload } from "react-icons/tb";
 import { config } from "../../config";
 import DinqCard from "./DinqCard";
 import "../styles/MobileProfile.css";
@@ -400,6 +401,14 @@ const MobileProfile = () => {
           >
             <FaGithub />
             Follow
+          </a>
+          <a
+            href={contact.cv}
+            download="Emir_Can_Ozdag_CV.pdf"
+            className="mp-hero__btn mp-hero__btn--wide"
+          >
+            <TbDownload />
+            Download CV
           </a>
         </div>
 

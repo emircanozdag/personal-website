@@ -17,8 +17,8 @@ export const LoadingContext = createContext<LoadingType | null>(null);
 
 export const LoadingProvider = ({ children }: PropsWithChildren) => {
   const [isLoading, setIsLoading] = useState(() => {
-    // Skip loading on mobile
-    if (window.innerWidth <= 768) return false;
+    // Skip loading when the 3D character is not rendered (see MainContainer)
+    if (window.innerWidth <= 1024) return false;
     return true;
   });
   const [loading, setLoading] = useState(0);
