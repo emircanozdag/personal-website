@@ -105,7 +105,8 @@ export const config = {
     contact: {
         email: "emircanozdag@gmail.com",
         github: "https://github.com/emircanozdag",
-        linkedin: "https://www.linkedin.com/in/emircanozdag/"
+        linkedin: "https://www.linkedin.com/in/emircanozdag/",
+        cv: "/cv.pdf"
     },
     skills: {
         develop: {

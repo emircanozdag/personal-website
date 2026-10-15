@@ -528,6 +528,10 @@
   margin-top: 6px;
 }
 
+.mp-hero__btn--wide {
+  grid-column: 1 / -1;
+}
+
 .mp-hero__btn {
   position: relative;
   display: inline-flex;
