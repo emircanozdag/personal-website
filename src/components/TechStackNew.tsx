@@ -81,6 +81,7 @@ const TechStackNew = () => {
           loop
           muted
           playsInline
+          preload="metadata"
           className="techstack-video"
         >
           <source src="/video/video.webm" type="video/webm" />
@@ -106,7 +107,7 @@ const TechStackNew = () => {
                   title={tech.name}
                   data-cursor="disable"
                 >
-                  <img src={tech.icon} alt={tech.name} />
+                  <img src={tech.icon} alt={tech.name} loading="lazy" decoding="async" width={48} height={48} />
                   <span>{tech.name}</span>
                 </a>
               ))}

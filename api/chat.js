@@ -9,10 +9,12 @@ async function checkChatRateLimit(ip) {
     try {
         const redis = getRedis();
         const key = KEYS.CHAT_RATE_LIMIT(ip);
-        const count = await redis.incr(key);
-        if (count === 1) {
-            await redis.expire(key, CHAT_RATE_WINDOW_SECONDS);
-        }
+        // NX keeps the window fixed from the first request; one round trip instead of two
+        const [count] = await redis
+            .pipeline()
+            .incr(key)
+            .expire(key, CHAT_RATE_WINDOW_SECONDS, 'NX')
+            .exec();
         return count <= CHAT_RATE_LIMIT;
     } catch {
         return true; // allow on Redis error so the chat stays usable

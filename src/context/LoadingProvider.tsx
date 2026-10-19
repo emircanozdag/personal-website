@@ -3,6 +3,7 @@ import {
   PropsWithChildren,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 import Loading from "../components/Loading";
@@ -23,11 +24,8 @@ export const LoadingProvider = ({ children }: PropsWithChildren) => {
   });
   const [loading, setLoading] = useState(0);
 
-  const value = {
-    isLoading,
-    setIsLoading,
-    setLoading,
-  };
+  // Stable context value so consumers don't re-render on every progress tick
+  const value = useMemo(() => ({ isLoading, setIsLoading, setLoading }), [isLoading]);
   useEffect(() => {
     // Auto-start animations on mobile since there's no 3D model
     if (window.innerWidth <= 768) {
@@ -41,10 +39,8 @@ export const LoadingProvider = ({ children }: PropsWithChildren) => {
     }
   }, []);
 
-  useEffect(() => {}, [loading]);
-
   return (
-    <LoadingContext.Provider value={value as LoadingType}>
+    <LoadingContext.Provider value={value}>
       {isLoading && <Loading percent={loading} />}
       <main className="main-body">{children}</main>
     </LoadingContext.Provider>

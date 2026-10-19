@@ -22,7 +22,7 @@ export default async function handler(req, res) {
         if (doExport === 'json' || doExport === 'csv') {
             const total = await redis.zcard(KEYS.CHAT_INDEX);
             const ids = await redis.zrange(KEYS.CHAT_INDEX, 0, total - 1, { rev: true });
-            const sessions = await Promise.all(ids.map((id) => redis.get(KEYS.chatSession(id))));
+            const sessions = ids.length ? await redis.mget(...ids.map((id) => KEYS.chatSession(id))) : [];
             const valid = sessions.filter(Boolean);
 
             if (doExport === 'json') {
@@ -52,7 +52,7 @@ export default async function handler(req, res) {
         const end = start + limitNum - 1;
 
         const ids = await redis.zrange(KEYS.CHAT_INDEX, start, end, { rev: true });
-        const sessions = await Promise.all(ids.map((id) => redis.get(KEYS.chatSession(id))));
+        const sessions = ids.length ? await redis.mget(...ids.map((id) => KEYS.chatSession(id))) : [];
         let valid = sessions.filter(Boolean);
 
         if (search) {
@@ -81,8 +81,10 @@ export default async function handler(req, res) {
     if (req.method === 'DELETE') {
         const { session } = req.query;
         if (!session) return res.status(400).json({ error: 'session required' });
-        await redis.del(KEYS.chatSession(session));
-        await redis.zrem(KEYS.CHAT_INDEX, session);
+        await Promise.all([
+            redis.del(KEYS.chatSession(session)),
+            redis.zrem(KEYS.CHAT_INDEX, session),
+        ]);
         return res.status(200).json({ ok: true });
     }
 

@@ -102,23 +102,26 @@ export async function saveChatSession(sessionId, messages, meta = {}) {
             ...meta,
         };
 
-        await redis.set(KEYS.chatSession(sessionId), session, { ex: 60 * 60 * 24 * 90 }); // 90 days TTL
+        // All writes go out in a single pipelined round trip
+        const pipe = redis.pipeline();
+        pipe.set(KEYS.chatSession(sessionId), session, { ex: 60 * 60 * 24 * 90 }); // 90 days TTL
 
         // Add to sorted set index (score = timestamp for ordering)
-        await redis.zadd(KEYS.CHAT_INDEX, { score: now, member: sessionId });
+        pipe.zadd(KEYS.CHAT_INDEX, { score: now, member: sessionId });
 
         // Update stats
         const today = new Date().toISOString().slice(0, 10);
         if (!existing) {
-            await redis.incr(KEYS.STATS_TOTAL_SESSIONS);
-            await redis.hincrby(KEYS.statsDaily(today), 'sessions', 1);
+            pipe.incr(KEYS.STATS_TOTAL_SESSIONS);
+            pipe.hincrby(KEYS.statsDaily(today), 'sessions', 1);
         }
         const prevCount = existing?.messageCount ?? 0;
         const newMsgs = Math.max(0, userMsgCount - prevCount);
         if (newMsgs > 0) {
-            await redis.incrby(KEYS.STATS_TOTAL_MESSAGES, newMsgs);
-            await redis.hincrby(KEYS.statsDaily(today), 'messages', newMsgs);
+            pipe.incrby(KEYS.STATS_TOTAL_MESSAGES, newMsgs);
+            pipe.hincrby(KEYS.statsDaily(today), 'messages', newMsgs);
         }
+        await pipe.exec();
     } catch (err) {
         console.error('saveChatSession error:', err);
     }

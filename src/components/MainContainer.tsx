@@ -1,19 +1,14 @@
-import { PropsWithChildren, useEffect, useState } from "react";
-import About from "./About";
-import Career from "./Career";
-import Contact from "./Contact";
+import { lazy, PropsWithChildren, Suspense, useEffect, useState } from "react";
 import Cursor from "./Cursor";
-import Landing from "./Landing";
 import Navbar from "./Navbar";
 import SocialIcons from "./SocialIcons";
-import WhatIDo from "./WhatIDo";
-import Work from "./Work";
-import TechStackNew from "./TechStackNew";
-import CallToAction from "./CallToAction";
 import ScrollToTop from "./ScrollToTop";
-import MobileProfile from "./mobile/MobileProfile";
-import FloatingChat from "./chat/FloatingChat";
 import setSplitText from "./utils/splitText";
+
+// Desktop sections and the mobile profile are split so each device only downloads its own tree
+const DesktopSections = lazy(() => import("./DesktopSections"));
+const MobileProfile = lazy(() => import("./mobile/MobileProfile"));
+const FloatingChat = lazy(() => import("./chat/FloatingChat"));
 
 const MainContainer = ({ children }: PropsWithChildren) => {
   const [isDesktopView, setIsDesktopView] = useState<boolean>(
@@ -22,17 +17,24 @@ const MainContainer = ({ children }: PropsWithChildren) => {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
 
   useEffect(() => {
-    const resizeHandler = () => {
+    let rafId = 0;
+    const update = () => {
       setSplitText();
+      // React bails out when the boolean is unchanged, so this only re-renders on breakpoint changes
       setIsDesktopView(window.innerWidth > 1024);
       setIsMobile(window.innerWidth <= 768);
     };
-    resizeHandler();
+    const resizeHandler = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(update);
+    };
+    update();
     window.addEventListener("resize", resizeHandler);
     return () => {
+      cancelAnimationFrame(rafId);
       window.removeEventListener("resize", resizeHandler);
     };
-  }, [isDesktopView]);
+  }, []);
 
   return (
     <div className="container-main">
@@ -40,21 +42,10 @@ const MainContainer = ({ children }: PropsWithChildren) => {
       <Navbar />
       <SocialIcons />
       {isDesktopView && !isMobile && children}
-      {isMobile ? (
-        <MobileProfile />
-      ) : (
-        <div className="container-main">
-          <Landing />
-          <About />
-          <WhatIDo />
-          <Career />
-          <Work />
-          <TechStackNew />
-          <CallToAction />
-          <Contact />
-        </div>
-      )}
-      {isMobile && <FloatingChat />}
+      <Suspense>
+        {isMobile ? <MobileProfile /> : <DesktopSections />}
+        {isMobile && <FloatingChat />}
+      </Suspense>
       <ScrollToTop />
     </div>
   );

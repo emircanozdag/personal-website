@@ -10,15 +10,8 @@ interface Props {
 
 const WorkImage = (props: Props) => {
   const [isVideo, setIsVideo] = useState(false);
-  const [video, setVideo] = useState("");
-  const handleMouseEnter = async () => {
-    if (props.video) {
-      setIsVideo(true);
-      const response = await fetch(`src/assets/${props.video}`);
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-      setVideo(blobUrl);
-    }
+  const handleMouseEnter = () => {
+    if (props.video) setIsVideo(true);
   };
 
   return (
@@ -39,6 +32,8 @@ const WorkImage = (props: Props) => {
         <img
           src={props.image}
           alt={props.alt}
+          loading="lazy"
+          decoding="async"
           onError={(e) => {
             const img = e.currentTarget as HTMLImageElement;
             if (!img.src.endsWith("/images/placeholder.webp")) {
@@ -46,7 +41,7 @@ const WorkImage = (props: Props) => {
             }
           }}
         />
-        {isVideo && <video src={video} autoPlay muted playsInline loop></video>}
+        {isVideo && <video src={`/video/${props.video}`} autoPlay muted playsInline loop></video>}
       </a>
     </div>
   );

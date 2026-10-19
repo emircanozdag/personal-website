@@ -24,7 +24,9 @@ export default async function handler(req, res) {
         days.push(key);
     }
 
-    const dailyData = await Promise.all(days.map((d) => redis.hgetall(KEYS.statsDaily(d))));
+    const pipe = redis.pipeline();
+    days.forEach((d) => pipe.hgetall(KEYS.statsDaily(d)));
+    const dailyData = await pipe.exec();
     for (let i = 0; i < days.length; i++) {
         daily[days[i]] = {
             sessions: parseInt(dailyData[i]?.sessions ?? 0),
