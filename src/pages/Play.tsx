@@ -2,7 +2,6 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Chess, Square, PieceSymbol, Color } from "chess.js";
 import RedoxChessEngine from "../utils/redoxchessEngine";
-import { config } from "../config";
 import { PlayChatPanel } from "../components/play/PlayChatPanel";
 import "./Play.css";
 
@@ -227,7 +226,7 @@ const Play = () => {
         <Link to="/" className="back-button" data-cursor="disable">
           ← Back to Home
         </Link>
-        <h1 className="play-title">Play Chess vs RedxChess — 3640 ELO AI Engine</h1>
+        <h1 className="play-title">Play Chess vs RedoxChess — 3640 ELO Engine</h1>
       </div>
 
       <div className="chess-container">
@@ -239,10 +238,10 @@ const Play = () => {
           <div className="player-bar opponent-bar">
             <div className="player-info">
               <div className="player-avatar">
-                <img src="/images/profile.jpg" alt={config.developer.fullName} />
+                <span aria-hidden>♚</span>
               </div>
               <div className="player-details">
-                <span className="player-name">{config.developer.name}</span>
+                <span className="player-name">RedoxChess</span>
                 <span className="player-rating">{engineThinking ? '🤔 Thinking...' : 'ELO 3640'}</span>
               </div>
             </div>

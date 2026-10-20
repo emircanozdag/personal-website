@@ -193,6 +193,11 @@
   top: 0;
   color: var(--backgroundColor);
 }
+.loader-logo {
+  display: block;
+  height: 26px;
+  width: auto;
+}
 .loader-title {
   font-weight: 700;
   font-size: 14px;

@@ -33,10 +33,10 @@ export const seoPages: Record<SeoPageKey, PageSeo> = {
   play: {
     title: "Play Chess vs 3640 ELO Engine | Emir Can Özdağ",
     description:
-      "Play chess online against RedxChess — a 3640 ELO rated AI chess engine built by Emir Can Özdağ with neural networks and advanced search algorithms.",
+      "Play chess online against RedoxChess, a 3640 ELO open-source chess engine running in your browser via WebAssembly.",
     path: "/play",
     keywords:
-      "RedxChess, chess engine, 3640 ELO, play chess online, AI chess, Emir Can Özdağ",
+      "RedoxChess, chess engine, 3640 ELO, play chess online, AI chess, Emir Can Özdağ",
   },
 };
 

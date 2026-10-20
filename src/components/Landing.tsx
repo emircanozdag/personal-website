@@ -35,7 +35,7 @@ const Landing = ({ children }: PropsWithChildren) => {
               to="/play"
               className="landing-play-card"
               data-cursor="disable"
-              aria-label="Play chess against my 3640 ELO engine"
+              aria-label="Play chess against the 3640 ELO RedoxChess engine"
             >
               <span className="landing-play-glow" aria-hidden />
 
@@ -80,7 +80,7 @@ const Landing = ({ children }: PropsWithChildren) => {
                   Play with me
                 </span>
                 <span className="landing-play-headline">
-                  Challenge my chess engine
+                  Challenge a chess engine
                 </span>
                 <span className="landing-play-meta">
                   <span className="landing-play-rating">3640 ELO</span>

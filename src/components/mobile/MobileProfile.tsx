@@ -236,7 +236,12 @@ const MobileProfile = () => {
     1200,
     prefersReducedMotion
   );
-  const eloCount = useCountUp(3640, statsStarted, 1400, prefersReducedMotion);
+  const companiesCount = useCountUp(
+    experiences.length,
+    statsStarted,
+    1200,
+    prefersReducedMotion
+  );
 
   useEffect(() => {
     if (statsStarted) return;
@@ -378,10 +383,10 @@ const MobileProfile = () => {
           </li>
           <li>
             <strong>
-              <span aria-hidden>{eloCount}</span>
-              <span className="mp-hero__stats-sr">3640</span>
+              <span aria-hidden>{companiesCount}</span>
+              <span className="mp-hero__stats-sr">{experiences.length}</span>
             </strong>
-            <span>Chess ELO</span>
+            <span>Companies</span>
           </li>
         </ul>
 
@@ -613,7 +618,7 @@ const MobileProfile = () => {
             </svg>
           }
           eyebrow="Challenge me"
-          title="Play my chess engine"
+          title="Play against a chess engine"
           subtitle="RedoxChess — neural-network evaluation, bitboards & UCI."
           trailing={<span className="mp-play__rating">3640 ELO</span>}
         />
