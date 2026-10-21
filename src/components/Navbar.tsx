@@ -22,7 +22,10 @@ const Navbar = () => {
       infinite: false,
     });
 
-    lenis.stop();
+    // Start right away if the intro already unlocked scrolling before this mounted
+    if (!document.documentElement.dataset.scrollUnlocked) lenis.stop();
+    const onUnlock = () => lenis?.start();
+    window.addEventListener("app:unlock-scroll", onUnlock);
 
     const onLenisScroll = () => ScrollTrigger.update();
     lenis.on("scroll", onLenisScroll);
@@ -76,6 +79,7 @@ const Navbar = () => {
         element.removeEventListener("click", handler)
       );
       window.removeEventListener("resize", onResize);
+      window.removeEventListener("app:unlock-scroll", onUnlock);
       lenis?.destroy();
     };
   }, []);

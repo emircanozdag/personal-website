@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import Loading from "../components/Loading";
+import { reloadForNewBuild, unlockScroll } from "../utils/chunkReload";
 
 interface LoadingType {
   isLoading: boolean;
@@ -27,15 +28,17 @@ export const LoadingProvider = ({ children }: PropsWithChildren) => {
   // Stable context value so consumers don't re-render on every progress tick
   const value = useMemo(() => ({ isLoading, setIsLoading, setLoading }), [isLoading]);
   useEffect(() => {
-    // Auto-start animations on mobile since there's no 3D model
-    if (window.innerWidth <= 768) {
-      import("../components/utils/initialFX").then((module) => {
-        if (module.initialFX) {
-          setTimeout(() => {
-            module.initialFX();
-          }, 100);
-        }
-      });
+    // Auto-start animations when the 3D model (and its loader) is skipped
+    if (window.innerWidth <= 1024) {
+      import("../components/utils/initialFX")
+        .then((module) => {
+          setTimeout(() => module.initialFX?.(), 100);
+        })
+        .catch(() => {
+          // Chunk missing after a deploy: reload once, otherwise unlock scrolling without the intro FX
+          if (reloadForNewBuild()) return;
+          unlockScroll();
+        });
     }
   }, []);
 

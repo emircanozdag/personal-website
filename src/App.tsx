@@ -1,4 +1,5 @@
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
+import { lazyWithReload } from "./utils/chunkReload";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
@@ -6,11 +7,11 @@ import SeoHead from "./components/SeoHead";
 import SeoFooter from "./components/SeoFooter";
 import "./App.css";
 
-const CharacterModel = lazy(() => import("./components/Character"));
-const MainContainer = lazy(() => import("./components/MainContainer"));
-const MyWorks = lazy(() => import("./pages/MyWorks"));
-const Play = lazy(() => import("./pages/Play"));
-const Admin = lazy(() => import("./pages/Admin"));
+const CharacterModel = lazyWithReload(() => import("./components/Character"));
+const MainContainer = lazyWithReload(() => import("./components/MainContainer"));
+const MyWorks = lazyWithReload(() => import("./pages/MyWorks"));
+const Play = lazyWithReload(() => import("./pages/Play"));
+const Admin = lazyWithReload(() => import("./pages/Admin"));
 import { LoadingProvider } from "./context/LoadingProvider";
 
 const App = () => {

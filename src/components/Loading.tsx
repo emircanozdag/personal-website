@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./styles/Loading.css";
 import { useLoading } from "../context/LoadingProvider";
+import { reloadForNewBuild, unlockScroll } from "../utils/chunkReload";
 
 import Marquee from "react-fast-marquee";
 
@@ -20,17 +21,22 @@ const Loading = ({ percent }: { percent: number }) => {
   }
 
   useEffect(() => {
-    import("./utils/initialFX").then((module) => {
-      if (isLoaded) {
-        setClicked(true);
+    if (!isLoaded) return;
+    setClicked(true);
+    import("./utils/initialFX")
+      .then((module) => {
         setTimeout(() => {
-          if (module.initialFX) {
-            module.initialFX();
-          }
+          module.initialFX?.();
           setIsLoading(false);
         }, 900);
-      }
-    });
+      })
+      .catch(() => {
+        // Chunk missing (e.g. a new deploy replaced it): reload once, and never leave the page scroll-locked
+        if (reloadForNewBuild()) return;
+        unlockScroll();
+        document.querySelector("main")?.classList.add("main-active");
+        setIsLoading(false);
+      });
   }, [isLoaded]);
 
   function handleMouseMove(e: React.MouseEvent<HTMLElement>) {

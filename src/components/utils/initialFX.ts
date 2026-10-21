@@ -1,12 +1,11 @@
 import { TextSplitter } from "../../utils/textSplitter";
 import gsap from "gsap";
 import { lenis } from "../Navbar";
+import { unlockScroll } from "../../utils/chunkReload";
 
 export function initialFX() {
-  document.body.style.overflowY = "auto";
-  if (lenis) {
-    lenis.start();
-  }
+  unlockScroll();
+  lenis?.start();
   document.getElementsByTagName("main")[0].classList.add("main-active");
   gsap.to("body", {
     backgroundColor: "#0b080c",

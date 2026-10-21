@@ -1,14 +1,15 @@
-import { lazy, PropsWithChildren, Suspense, useEffect, useState } from "react";
+import { PropsWithChildren, Suspense, useEffect, useState } from "react";
 import Cursor from "./Cursor";
 import Navbar from "./Navbar";
 import SocialIcons from "./SocialIcons";
 import ScrollToTop from "./ScrollToTop";
 import setSplitText from "./utils/splitText";
+import { lazyWithReload } from "../utils/chunkReload";
 
 // Desktop sections and the mobile profile are split so each device only downloads its own tree
-const DesktopSections = lazy(() => import("./DesktopSections"));
-const MobileProfile = lazy(() => import("./mobile/MobileProfile"));
-const FloatingChat = lazy(() => import("./chat/FloatingChat"));
+const DesktopSections = lazyWithReload(() => import("./DesktopSections"));
+const MobileProfile = lazyWithReload(() => import("./mobile/MobileProfile"));
+const FloatingChat = lazyWithReload(() => import("./chat/FloatingChat"));
 
 const MainContainer = ({ children }: PropsWithChildren) => {
   const [isDesktopView, setIsDesktopView] = useState<boolean>(
