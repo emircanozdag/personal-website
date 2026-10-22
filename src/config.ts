@@ -66,6 +66,15 @@ export const config = {
     ],
     projects: [
         {
+            id: 5,
+            title: "PolicyHub",
+            category: "Insurance / Java",
+            technologies: "Java 21, Spring Boot, Spring Batch, Oracle, Flyway, Resilience4j, JUnit 5, Testcontainers, WireMock, Docker",
+            image: "/images/policyhub.svg",
+            link: "https://github.com/emircanozdag/policyhub",
+            description: "Motor insurance (Kasko / Traffic) platform: quoting with per-product premium strategies, policy issuance against an idempotent payment gateway, and a vehicle registry integration with retry, circuit breaker and fallback. Spring Batch jobs import a mainframe fixed-width extract described by a COBOL copybook and create nightly renewal quotes on Oracle. Integration-tested against a real Oracle database."
+        },
+        {
             id: 1,
             title: "Telecom Usage & Notification Platform",
             category: "Microservices / .NET",
@@ -113,7 +122,7 @@ export const config = {
             title: "BACKEND",
             description: "Scalable .NET services & event-driven systems",
             details: "Designing and building high-performance backend services and RESTful APIs with C#, .NET Core and ASP.NET Core. Event-driven architectures with Kafka and RabbitMQ, Redis caching, secure auth with OAuth 2.0/JWT, and delivery through CI/CD on Docker and Kubernetes.",
-            tools: ["C#", ".NET Core", "ASP.NET Core", "EF Core", "Dapper", "Kafka", "RabbitMQ", "Redis", "MSSQL", "Oracle", "Docker", "Kubernetes", "Azure DevOps"]
+            tools: ["C#", ".NET Core", "ASP.NET Core", "EF Core", "Dapper", "Java", "Spring Boot", "Kafka", "RabbitMQ", "Redis", "MSSQL", "Oracle", "Docker", "Kubernetes", "Azure DevOps"]
         },
         design: {
             title: "FRONTEND & AI",
